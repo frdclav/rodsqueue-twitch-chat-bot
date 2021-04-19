@@ -1,25 +1,29 @@
 import React, { useContext } from 'react';
-import { List, ListItem, ListItemText } from '@material-ui/core';
-import { QueueContext } from '../../Context/QueueContext'
+import { List, Paper } from '@material-ui/core';
+import { WaitingQueueContext } from '../../Context/WaitingQueueContext';
+
+import { QueueItem } from '../QueueItem';
 
 const Queue = (props) => {
-    const { curQueueState } = useContext(QueueContext)
+    const { curWaitingQueueState, setWaitingQueueState } = useContext(WaitingQueueContext)
 
 
 
 
     return (
+        <Paper> <List>
 
-        <List>
 
+            {curWaitingQueueState.curQueueArr.map(item => (
 
-            {curQueueState.curQueueArr.map(element => (
-                 <ListItem >
-                        <ListItemText primary={element}>{element}</ListItemText>
-                      </ListItem>
-    ))}
+                   <QueueItem element={item}  />
+                   
+               
 
-        </List>
+            ))}
+
+        </List></Paper>
+
     )
 };
 

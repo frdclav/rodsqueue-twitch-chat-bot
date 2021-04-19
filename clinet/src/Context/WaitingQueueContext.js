@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export const QueueContext = createContext({
+export const WaitingQueueContext = createContext({
 	curQueue: {},
 	setCurQueue: () => { }
 });
