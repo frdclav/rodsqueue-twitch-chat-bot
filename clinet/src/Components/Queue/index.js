@@ -5,7 +5,7 @@ import { WaitingQueueContext } from '../../Context/WaitingQueueContext';
 import { QueueItem } from '../QueueItem';
 
 const Queue = (props) => {
-    const { curWaitingQueueState, setWaitingQueueState } = useContext(WaitingQueueContext)
+    const { curWaitingQueueState } = useContext(WaitingQueueContext)
 
 
 

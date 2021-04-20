@@ -1,13 +1,11 @@
 import React, { useState, useContext } from "react";
 import { ListItem, ListItemText, Button, ButtonGroup } from "@material-ui/core";
-import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
+// import { WaitingQueueContext } from '../../Context/WaitingQueueContext';
 import { ApprovedQueueContext } from "../../Context/ApprovedQueueContext";
 
-const QueueItem = (props) => {
+const ApprovedQueueItem = (props) => {
   const [anchorEl, setAnchorEl] = useState(false);
-  const { curWaitingQueueState, setCurWaitingQueueState } = useContext(
-    WaitingQueueContext
-  );
+  // const { curWaitingQueueState, setCurWaitingQueueState } = useContext(WaitingQueueContext)
   const { curApprovedQueueState, setCurApprovedQueueState } = useContext(
     ApprovedQueueContext
   );
@@ -24,26 +22,14 @@ const QueueItem = (props) => {
 
   const handleRemove = (element) => {
     return () => {
-      let newArr = curWaitingQueueState.curQueueArr.filter(
+      let newArr = curApprovedQueueState.curQueueArr.filter(
         (el) => el !== element
       );
-      setCurWaitingQueueState({ curQueueArr: newArr });
+      setCurApprovedQueueState({ curQueueArr: newArr });
       console.log("handleRemove", newArr);
     };
   };
 
-  const handleApprove = (element) => {
-    return () => {
-      const rem = handleRemove(element);
-      rem();
-      let newArr = curApprovedQueueState.curQueueArr;
-      newArr.push(element);
-
-      setCurApprovedQueueState({ curQueueArr: newArr });
-
-      console.log("handleApprove", newArr);
-    };
-  };
   const handleMoveUp = (element) => {
     return () => {
       console.log(`moving up ${element}`);
@@ -72,7 +58,6 @@ const QueueItem = (props) => {
         >
           <Button onClick={handleMoveUp(props.element)}>Move Up</Button>
           <Button onClick={handleMoveDown(props.element)}>Move Down</Button>
-          <Button onClick={handleApprove(props.element)}>Approve</Button>
           <Button onClick={handleRemove(props.element)}>Remove</Button>
         </ButtonGroup>
       )}
@@ -80,4 +65,4 @@ const QueueItem = (props) => {
   );
 };
 
-export { QueueItem };
+export { ApprovedQueueItem };

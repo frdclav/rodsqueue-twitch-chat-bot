@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
-import { List, ListItem, ListItemText, Paper } from '@material-ui/core';
-import { ApprovedQueueContext } from '../../Context/ApprovedQueueContext'
+import { List, Paper } from '@material-ui/core';
+import { ApprovedQueueContext } from '../../Context/ApprovedQueueContext';
+
+import { ApprovedQueueItem } from '../ApprovedQueueItem';
 
 const ApprovedQueue = (props) => {
     const { curApprovedQueueState } = useContext(ApprovedQueueContext)
@@ -12,10 +14,12 @@ const ApprovedQueue = (props) => {
         <Paper> <List>
 
 
-            {curApprovedQueueState.curQueueArr.map(element => (
-                <ListItem >
-                    <ListItemText primary={element}>{element}</ListItemText>
-                </ListItem>
+            {curApprovedQueueState.curQueueArr.map(item => (
+
+                   <ApprovedQueueItem element={item}  />
+                   
+               
+
             ))}
 
         </List></Paper>

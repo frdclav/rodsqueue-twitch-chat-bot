@@ -16,7 +16,7 @@ const App = () => {
 
   })
   const [curApprovedQueueState, setCurApprovedQueueState] = useState({
-    curQueueArr: ['Item1', 'Item2']
+    curQueueArr: [{ id: '_piaefneafeafpiae23048', value: 'Item1' }, { id: '_apeine93faefeaf04bnf08', value: 'Item2' }]
 
   })
   const [curAddToQueueInputState, setCurAddToQueueInputState] = useState('')
