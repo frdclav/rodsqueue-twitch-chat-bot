@@ -4,18 +4,24 @@ import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 
 import { QueueItem } from "../QueueItem";
 
-const Queue = (props) => {
-  const { curWaitingQueueState } = useContext(WaitingQueueContext);
-  const theDbValue = props.dbValue || curWaitingQueueState;
+const Queue = ( props ) =>
+{
+  const { curWaitingQueueState } = useContext( WaitingQueueContext );
+  const theDbValue = props.dbValue ? props.dbValue.curQueueArr : curWaitingQueueState;
 
   return (
     <Paper>
       {" "}
       <List>
         {/* {curWaitingQueueState.curQueueArr.map(item => ( */}
-        {theDbValue.curQueueArr.map((item) => (
-          <QueueItem element={item} />
-        ))}
+        {/* {theDbValue.curQueueArr.map((item) => ( */}
+        {Object.keys( theDbValue ).map( ( key, index ) =>
+
+        (
+          <QueueItem element={{ ...theDbValue[ key ], key }} />
+        )
+
+        )}
       </List>
     </Paper>
   );

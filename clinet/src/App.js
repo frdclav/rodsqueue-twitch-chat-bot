@@ -8,27 +8,29 @@ import { ApprovedQueue } from "./Components/ApprovedQueue";
 import { WaitingQueueContext } from "./Context/WaitingQueueContext";
 import { ApprovedQueueContext } from "./Context/ApprovedQueueContext";
 import { AddToQueueInputContext } from "./Context/AddToQueueInputContext";
-import {
+import
+{
   FirebaseDatabaseNode,
   FirebaseDatabaseProvider,
 } from "@react-firebase/database";
 import firebase from "firebase";
-const App = (props) => {
-  const [curWaitingQueueState, setCurWaitingQueueState] = useState({
+const App = ( props ) =>
+{
+  const [ curWaitingQueueState, setCurWaitingQueueState ] = useState( {
     curQueueArr: [
       { id: "_piaefnpiae23048", value: "Item1" },
       { id: "_apeine93f04bnf08", value: "Item2" },
     ],
-  });
-  const [curApprovedQueueState, setCurApprovedQueueState] = useState({
+  } );
+  const [ curApprovedQueueState, setCurApprovedQueueState ] = useState( {
     curQueueArr: [
       { id: "_piaefneafeafpiae23048", value: "Item1" },
       { id: "_apeine93faefeaf04bnf08", value: "Item2" },
     ],
-  });
-  const [curAddToQueueInputState, setCurAddToQueueInputState] = useState({
+  } );
+  const [ curAddToQueueInputState, setCurAddToQueueInputState ] = useState( {
     in: "",
-  });
+  } );
   const firebaseConfig = {
     apiKey: "AIzaSyAw0Gq2dugz4l6GaNSzISAfQ7c5l57TAKw",
     authDomain: "rodsqueue.firebaseapp.com",
@@ -57,7 +59,9 @@ const App = (props) => {
             </React.Fragment>
           );
         }} */}
-        {(d) => {
+        {( d ) =>
+        {
+          console.log( 'd', d.value )
           return (
             // <React.fragment>
             <ApprovedQueueContext.Provider
@@ -75,9 +79,9 @@ const App = (props) => {
                   <div>
                     <pre>Path {d.path}</pre>
                     <pre style={{ height: 300, overflow: "auto" }}>
-                      Value {JSON.stringify(d.value)}
+                      Value {d.value ? JSON.stringify( d.value.curQueueArr ) : `null`}
                     </pre>
-                    <AddToQueueInput dbValue={d.value} />
+                    <AddToQueueInput dbValue={d.value ? d.value : `NULL`} />
                     <Grid container spacing={2}>
                       <Grid item>
                         <Queue dbValue={d.value} />

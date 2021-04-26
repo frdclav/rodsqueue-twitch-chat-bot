@@ -4,6 +4,7 @@ import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 import { AddToQueueInputContext } from "../../Context/AddToQueueInputContext";
 import { FirebaseDatabaseMutation } from "@react-firebase/database";
 import { AddToQueueInputForm } from "../AddToQueueInputForm"
+import API from "../../Utils/API"
 
 const AddToQueueInput = ( props ) =>
 {
@@ -20,13 +21,20 @@ const AddToQueueInput = ( props ) =>
     return "_" + Math.random().toString( 36 ).substr( 2, 9 );
   };
 
-
+  // const theDbValue = props.dbValue ? props.dbValue.curQueueArr : curWaitingQueueState;
+  // let theDbValue = props
 
   const [ inputData, setInputData ] = useState( '' );
+  const [ theDbValue, setTheDbValue ] = useState( props )
   useEffect( () =>
   {
     console.log( "inputData", inputData );
   }, [ inputData ] );
+  useEffect( () =>
+  {
+    console.log( "props updating", props )
+    setTheDbValue( props )
+  }, [ props ] )
 
   return (
     <FirebaseDatabaseMutation type="update" path="/">
@@ -36,9 +44,11 @@ const AddToQueueInput = ( props ) =>
         const handleSubmit = ( newValue ) =>
         {
           console.log( 'newValue', newValue );
-          let newQueue = curWaitingQueueState.curQueueArr;
-          newQueue.push( { id: ID(), value: newValue } );
-          const { key } = runMutation( { curQueueArr: newQueue } );
+          console.log( 'props', theDbValue );
+          API.addToQueueAPI( newValue )
+          // let newQueue = props.dbValue.curQueueArr;
+          // newQueue.push( { id: ID(), value: newValue } );
+          // const { key } = runMutation( { curQueueArr: newQueue } );
         }
         return (
 
