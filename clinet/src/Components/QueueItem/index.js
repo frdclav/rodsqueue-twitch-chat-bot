@@ -14,12 +14,12 @@ const QueueItem = (props) => {
 
   const handleSlideOpen = (event) => {
     setAnchorEl(true);
-    console.log("handleSlideOpen");
+    // console.log("handleSlideOpen");
   };
 
   const handleSlideClose = () => {
     setAnchorEl(false);
-    console.log("handleSlideClose");
+    // console.log("handleSlideClose");
   };
 
   const handleRemove = (element) => {

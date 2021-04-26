@@ -1,42 +1,35 @@
-import React, { useContext } from 'react';
-import { List, Paper } from '@material-ui/core';
-import { WaitingQueueContext } from '../../Context/WaitingQueueContext';
+import React, { useContext } from "react";
+import { List, Paper } from "@material-ui/core";
+import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 
-import { QueueItem } from '../QueueItem';
+import { QueueItem } from "../QueueItem";
 
 const Queue = (props) => {
-    const { curWaitingQueueState } = useContext(WaitingQueueContext)
+  const { curWaitingQueueState } = useContext(WaitingQueueContext);
+  const theDbValue = props.dbValue || curWaitingQueueState;
 
-
-
-
-    return (
-        <Paper> <List>
-
-
-            {curWaitingQueueState.curQueueArr.map(item => (
-
-                   <QueueItem element={item}  />
-                   
-               
-
-            ))}
-
-        </List></Paper>
-
-    )
+  return (
+    <Paper>
+      {" "}
+      <List>
+        {/* {curWaitingQueueState.curQueueArr.map(item => ( */}
+        {theDbValue.curQueueArr.map((item) => (
+          <QueueItem element={item} />
+        ))}
+      </List>
+    </Paper>
+  );
 };
 
 export { Queue };
 
-
- // () => {
-    //   return (
-    //     <ListItem >
-    //       <ListItemText primary="Item1"></ListItemText>
-    //     </ListItem>)
-    // }, () => {
-    //   return (<ListItem >
-    //     <ListItemText primary="Item2"></ListItemText>
-    //   </ListItem>)
-    // }]
+// () => {
+//   return (
+//     <ListItem >
+//       <ListItemText primary="Item1"></ListItemText>
+//     </ListItem>)
+// }, () => {
+//   return (<ListItem >
+//     <ListItemText primary="Item2"></ListItemText>
+//   </ListItem>)
+// }]

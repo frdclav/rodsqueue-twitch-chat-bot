@@ -1,8 +1,6 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 export const AddToQueueInputContext = createContext({
-	addToQueueInput:'',
-	setAddToQueueInput: () => { }
+  addToQueueInput: {},
+  setAddToQueueInput: () => {},
 });
-
-
