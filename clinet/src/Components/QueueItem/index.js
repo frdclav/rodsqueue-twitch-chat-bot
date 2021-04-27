@@ -81,16 +81,22 @@ const QueueItem = ( props ) =>
     >
       <ListItemText primary={value}>{value}</ListItemText>
       {anchorEl && (
-        <ButtonGroup
-          variant="text"
-          color="primary"
-          aria-label="text primary button group"
-        >
-          <Button onClick={handleMoveUp( props.element )}>Move Up</Button>
-          <Button onClick={handleMoveDown( props.element )}>Move Down</Button>
-          <Button onClick={handleApprove( props.element )}>Approve</Button>
-          <Button onClick={handleRemove( props.element )}>Remove</Button>
-        </ButtonGroup>
+        <React.Fragment>
+          <br />
+          <br />
+          <ButtonGroup
+            fullWidth="false"
+            color="primary"
+            size="small"
+            aria-label="text primary button group"
+          >
+            <Button onClick={handleMoveUp( props.element )}>move up</Button>
+            <Button onClick={handleMoveDown( props.element )}>move down</Button>
+            {/* <Button onClick={handleApprove( props.element )}>Approve</Button> */}
+            <Button onClick={handleRemove( props.element )}>delete</Button>
+          </ButtonGroup>
+        </React.Fragment>
+
       )}
     </ListItem>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 // import logo from './logo.svg';
 import "./App.css";
 import { AddToQueueInput } from "./Components/AddToQueueInput";
@@ -14,6 +14,15 @@ import
   FirebaseDatabaseProvider,
 } from "@react-firebase/database";
 import firebase from "firebase";
+import "firebase/auth"
+import
+{
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { FirebaseAuthConsumer, FirebaseAuthProvider } from "@react-firebase/auth"
 const App = ( props ) =>
 {
   const [ curWaitingQueueState, setCurWaitingQueueState ] = useState( {
@@ -30,7 +39,7 @@ const App = ( props ) =>
   } );
   const [ curAddToQueueInputState, setCurAddToQueueInputState ] = useState( {
     in: "",
-  } );
+  } )
   const firebaseConfig = {
     apiKey: "AIzaSyAw0Gq2dugz4l6GaNSzISAfQ7c5l57TAKw",
     authDomain: "rodsqueue.firebaseapp.com",
@@ -39,34 +48,49 @@ const App = ( props ) =>
     messagingSenderId: "1023284396545",
     appId: "1:1023284396545:web:54852affa9b225aca27600",
   };
-  return (
-    <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
-      <FirebaseDatabaseNode path="/">
-        {/* {(d) => {
-          return (
-            <React.Fragment>
-              <pre>Path {d.path}</pre>
-              <pre style={{ height: 300, overflow: "auto" }}>
-                Value {JSON.stringify(d.value)}
-              </pre>
-              <button
-                onClick={() => {
-                  this.setState((state) => ({ limit: state.limit + 2 }));
-                }}
-              >
-                Load more
-              </button>
-            </React.Fragment>
-          );
-        }} */}
-        {( d ) =>
-        {
-          console.log( 'd', d.value )
-          return (
-            // <React.fragment>
-            <ApprovedQueueContext.Provider
-              value={{ curApprovedQueueState, setCurApprovedQueueState }}
-            >
+  // firebase.initializeApp( firebaseConfig )
+  // const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+  // firebase.auth().signInWithPopup( googleAuthProvider );
+  const IfUnAuthed = () =>
+  {
+    return (
+      <div>
+        <h2>You're not signed in </h2>
+        <button
+          onClick={() =>
+          {
+            firebase
+              .app()
+              .auth()
+              .signInAnonymously();
+          }}
+        >
+          Sign in anonymously
+        </button>
+        <button
+          onClick={() =>
+          {
+            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup( googleAuthProvider );
+          }}
+        >
+          Sign in with Google
+        </button>
+      </div>
+    );
+  };
+
+  const IfAuthed = () =>
+  {
+    return (
+      <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
+        <FirebaseDatabaseNode path="/">
+          {( d ) =>
+          {
+            console.log( 'd', d.value )
+            return (
+
+
               <WaitingQueueContext.Provider
                 value={{ curWaitingQueueState, setCurWaitingQueueState }}
               >
@@ -76,29 +100,136 @@ const App = ( props ) =>
                     setCurAddToQueueInputState,
                   }}
                 >
-                  <div>
-                    <pre>Path {d.path}</pre>
-                    <pre style={{ height: 300, overflow: "auto" }}>
-                      Value {d.value ? JSON.stringify( d.value.curQueueArr ) : `null`}
-                    </pre>
-                    <AddToQueueInput dbValue={d.value ? d.value : `NULL`} />
-                    <Grid container spacing={2}>
-                      <Grid item>
-                        <Queue dbValue={d.value} />
-                      </Grid>
-                      <Grid item>
-                        <ApprovedQueue />
-                      </Grid>
+                  <Grid style={{ padding: '100px' }} container direction="column" justify="space-around" alignItems="center" spacing={4}>
+                    <Grid item>
+                      {/* <ApprovedQueue /> */}
+                      <AddToQueueInput dbValue={d.value ? d.value : `NULL`} />
+
+
                     </Grid>
-                  </div>
+                    <Grid item>
+                      <Queue dbValue={d.value} />
+                    </Grid>
+                    <Grid item>
+                      <Button color="primary" onClick={() => { firebase.auth().signOut() }}>SIGN OUT!</Button>
+                    </Grid>
+                    <Grid item>
+                      <Link to="/public">PUBLIC VIEW</Link>
+                    </Grid>
+                  </Grid>
+                  {/* <Grid container justify="space-around" alignItems="center" spacing={4}>
+                          <Grid item><pre>Path {d.path}</pre></Grid>
+                          <Grid item><pre style={{ height: 300, overflow: "auto" }}>
+                            Value {d.value ? JSON.stringify( d.value.curQueueArr, null, 1 ) : `null`}
+                          </pre></Grid>
+        
+                        </Grid> */}
+
                 </AddToQueueInputContext.Provider>
               </WaitingQueueContext.Provider>
-            </ApprovedQueueContext.Provider>
-            // </React.fragment>
-          );
+
+            );
+          }
+          }
+        </FirebaseDatabaseNode>
+      </FirebaseDatabaseProvider >
+    )
+  }
+
+  const Main = () =>
+  {
+    return ( <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+
+      <FirebaseAuthConsumer>
+        {( { isSignedIn, user, providerId } ) =>
+        {
+          if ( !isSignedIn )
+          {
+            return IfUnAuthed();
+
+          } else
+          {
+            return IfAuthed();
+          }
         }}
-      </FirebaseDatabaseNode>
-    </FirebaseDatabaseProvider>
+
+      </FirebaseAuthConsumer>
+
+      {/* {(d) => {
+return (
+  <React.Fragment>
+    <pre>Path {d.path}</pre>
+    <pre style={{ height: 300, overflow: "auto" }}>
+      Value {JSON.stringify(d.value)}
+    </pre>
+    <button
+      onClick={() => {
+        this.setState((state) => ({ limit: state.limit + 2 }));
+      }}
+    >
+      Load more
+    </button>
+  </React.Fragment>
+);
+}} */}
+
+
+    </FirebaseAuthProvider> )
+  }
+
+  const Public = () =>
+  {
+    return (
+      <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
+        <FirebaseDatabaseNode path="/">
+          {( d ) =>
+          {
+            console.log( 'd', d.value )
+            return (
+
+
+              <WaitingQueueContext.Provider
+                value={{ curWaitingQueueState, setCurWaitingQueueState }}
+              >
+
+                <Grid style={{ padding: '100px' }} container direction="column" justify="space-around" alignItems="center" spacing={4}>
+
+                  <Grid item>
+                    <Queue dbValue={d.value} />
+                  </Grid>
+                </Grid>
+                {/* <Grid container justify="space-around" alignItems="center" spacing={4}>
+                          <Grid item><pre>Path {d.path}</pre></Grid>
+                          <Grid item><pre style={{ height: 300, overflow: "auto" }}>
+                            Value {d.value ? JSON.stringify( d.value.curQueueArr, null, 1 ) : `null`}
+                          </pre></Grid>
+        
+                        </Grid> */}
+
+              </WaitingQueueContext.Provider>
+
+            );
+          }
+          }
+        </FirebaseDatabaseNode>
+      </FirebaseDatabaseProvider >
+    )
+  }
+  return (
+    <Router>
+      <Switch>
+        <Route path="/main">
+          <Main />
+        </Route>
+        <Route path="/public">
+          <Public />
+        </Route>
+
+      </Switch>
+
+
+    </Router>
+
   );
 
   // return [
