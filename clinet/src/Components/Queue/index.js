@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { List, Paper } from "@material-ui/core";
+import { List, Paper, Grid } from "@material-ui/core";
 import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 
 import { QueueItem } from "../QueueItem";
@@ -10,9 +10,8 @@ const Queue = ( props ) =>
   const theDbValue = props.dbValue ? props.dbValue.curQueueArr : curWaitingQueueState;
 
   return (
-    <Paper>
-      {" "}
-      <List>
+    <List>
+      <Grid style={{ padding: '10px' }} container direction="column">
         {/* {curWaitingQueueState.curQueueArr.map(item => ( */}
         {/* {theDbValue.curQueueArr.map((item) => ( */}
         {Object.keys( theDbValue ).map( ( key, index ) =>
@@ -22,8 +21,8 @@ const Queue = ( props ) =>
         )
 
         )}
-      </List>
-    </Paper>
+      </Grid>
+    </List>
   );
 };
 

@@ -192,12 +192,8 @@ return (
                 value={{ curWaitingQueueState, setCurWaitingQueueState }}
               >
 
-                <Grid style={{ padding: '100px' }} container direction="column" justify="space-around" alignItems="center" spacing={4}>
 
-                  <Grid item>
-                    <Queue dbValue={d.value} />
-                  </Grid>
-                </Grid>
+                <Queue dbValue={d.value} display="" />
                 {/* <Grid container justify="space-around" alignItems="center" spacing={4}>
                           <Grid item><pre>Path {d.path}</pre></Grid>
                           <Grid item><pre style={{ height: 300, overflow: "auto" }}>

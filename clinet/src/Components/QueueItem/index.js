@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ListItem, ListItemText, Button, ButtonGroup } from "@material-ui/core";
+import { ListItem, ListItemText, Button, ButtonGroup, Grid, Paper } from "@material-ui/core";
 import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 import { ApprovedQueueContext } from "../../Context/ApprovedQueueContext";
 import API from "../../Utils/API"
@@ -74,31 +74,44 @@ const QueueItem = ( props ) =>
   const listItemId = key;
   console.log( 'queue item props', props )
   return (
-    <ListItem
-      id={listItemId}
-      onMouseEnter={handleSlideOpen}
-      onMouseLeave={handleSlideClose}
-    >
-      <ListItemText primary={value}>{value}</ListItemText>
-      {anchorEl && (
-        <React.Fragment>
-          <br />
-          <br />
-          <ButtonGroup
-            fullWidth="false"
-            color="primary"
-            size="small"
-            aria-label="text primary button group"
-          >
-            <Button onClick={handleMoveUp( props.element )}>move up</Button>
-            <Button onClick={handleMoveDown( props.element )}>move down</Button>
-            {/* <Button onClick={handleApprove( props.element )}>Approve</Button> */}
-            <Button onClick={handleRemove( props.element )}>delete</Button>
-          </ButtonGroup>
-        </React.Fragment>
+    <Grid style={{ padding: '4px' }} item>
+      <Paper style={{ background: 'rgba( 255, 255, 255, 0.8 )' }} variant="elevation" >
+        <ListItem
+          id={listItemId}
+          onMouseEnter={handleSlideOpen}
+          onMouseLeave={handleSlideClose}
+        >
+          <Grid container alignItems='center' direction='column'>
+            <Grid item>
+              <ListItemText primary={value} primaryTypographyProps={{ display: 'block', variant: 'h3' }}>{value}</ListItemText>
 
-      )}
-    </ListItem>
+            </Grid>
+            <Grid item>
+              {anchorEl && (
+                <React.Fragment>
+                  <br />
+                  <br />
+                  <ButtonGroup
+                    fullWidth="false"
+                    color="primary"
+                    size="small"
+                    aria-label="text primary button group"
+                  >
+                    <Button onClick={handleMoveUp( props.element )}>move up</Button>
+                    <Button onClick={handleMoveDown( props.element )}>move down</Button>
+                    {/* <Button onClick={handleApprove( props.element )}>Approve</Button> */}
+                    <Button onClick={handleRemove( props.element )}>delete</Button>
+                  </ButtonGroup>
+                </React.Fragment>
+
+              )}
+            </Grid>
+
+          </Grid>
+
+        </ListItem>
+      </Paper>
+    </Grid>
   );
 };
 
