@@ -17,7 +17,7 @@ const Queue = ( props ) =>
         {Object.keys( theDbValue ).map( ( key, index ) =>
 
         (
-          <QueueItem element={{ ...theDbValue[ key ], key }} />
+          <QueueItem element={{ ...theDbValue[ key ], key }} isPublic={props.isPublic} />
         )
 
         )}

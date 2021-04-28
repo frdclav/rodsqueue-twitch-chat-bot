@@ -79,12 +79,12 @@ const App = ( props ) =>
       </div>
     );
   };
-
+  const curShop = 'seanthenkyle'
   const IfAuthed = () =>
   {
     return (
       <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
-        <FirebaseDatabaseNode path="/">
+        <FirebaseDatabaseNode path={`/${curShop}`}>
           {( d ) =>
           {
             console.log( 'd', d.value )
@@ -181,7 +181,7 @@ return (
   {
     return (
       <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
-        <FirebaseDatabaseNode path="/">
+        <FirebaseDatabaseNode path={`/${curShop}`}>
           {( d ) =>
           {
             console.log( 'd', d.value )
@@ -193,7 +193,7 @@ return (
               >
 
 
-                <Queue dbValue={d.value} display="" />
+                <Queue dbValue={d.value} display="" isPublic={true} />
                 {/* <Grid container justify="space-around" alignItems="center" spacing={4}>
                           <Grid item><pre>Path {d.path}</pre></Grid>
                           <Grid item><pre style={{ height: 300, overflow: "auto" }}>
@@ -214,6 +214,9 @@ return (
   return (
     <Router>
       <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
         <Route path="/main">
           <Main />
         </Route>

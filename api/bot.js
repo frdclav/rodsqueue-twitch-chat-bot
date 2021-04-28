@@ -79,7 +79,7 @@ function onMessageHandler ( target, context, msg, self )
           //  Your items are: ${listOfItems}`
           `${sender}, I've confirmed your order. Adding you to the queue now!`
         );
-        axios.post( 'https://rodsqueue-default-rtdb.firebaseio.com/curQueueArr.json', { id: ID(), value: `${sender}: ${listOfItems}` } ).then( ( response ) =>
+        axios.post( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json', { id: ID(), value: `${sender}: ${listOfItems}`, order_id: `${order_id}` } ).then( ( response ) =>
         {
           console.log( response )
         } )

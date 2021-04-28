@@ -12,7 +12,7 @@ export default {
     addToQueueAPI: ( value ) =>
     {
 
-        axios.post( 'https://rodsqueue-default-rtdb.firebaseio.com/curQueueArr.json', { id: ID(), value } ).then( ( response ) =>
+        axios.post( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json', { id: ID(), value } ).then( ( response ) =>
         {
             console.log( response )
         } )
@@ -22,7 +22,7 @@ export default {
 
     removeFromQueueAPI: ( value ) =>
     {
-        axios.delete( `https://rodsqueue-default-rtdb.firebaseio.com/curQueueArr/${value}.json` ).then( ( response ) =>
+        axios.delete( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr/${value}.json` ).then( ( response ) =>
         {
             console.log( ' removeFromQUeueAPI', response )
         } )

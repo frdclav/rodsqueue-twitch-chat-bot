@@ -87,7 +87,7 @@ const QueueItem = ( props ) =>
 
             </Grid>
             <Grid item>
-              {anchorEl && (
+              {!props.isPublic && anchorEl && (
                 <React.Fragment>
                   <br />
                   <br />
