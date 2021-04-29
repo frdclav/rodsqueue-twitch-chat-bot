@@ -24,6 +24,7 @@ import
   Link
 } from "react-router-dom";
 import { FirebaseAuthConsumer, FirebaseAuthProvider } from "@react-firebase/auth"
+import { SiteHeader } from "./Components/SiteHeader"
 const App = ( props ) =>
 {
   const [ curWaitingQueueState, setCurWaitingQueueState ] = useState( {
@@ -117,43 +118,28 @@ const App = ( props ) =>
 
   const Main = () =>
   {
-    return ( <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+    return ( <SiteHeader>
+      <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 
-      <FirebaseAuthConsumer>
-        {( { isSignedIn, user, providerId } ) =>
-        {
-          if ( !isSignedIn )
+        <FirebaseAuthConsumer>
+          {( { isSignedIn, user, providerId } ) =>
           {
-            return IfUnAuthed();
+            if ( !isSignedIn )
+            {
+              return IfUnAuthed();
 
-          } else
-          {
-            return IfAuthed();
-          }
-        }}
+            } else
+            {
+              return IfAuthed();
+            }
+          }}
 
-      </FirebaseAuthConsumer>
-
-      {/* {(d) => {
-return (
-  <React.Fragment>
-    <pre>Path {d.path}</pre>
-    <pre style={{ height: 300, overflow: "auto" }}>
-      Value {JSON.stringify(d.value)}
-    </pre>
-    <button
-      onClick={() => {
-        this.setState((state) => ({ limit: state.limit + 2 }));
-      }}
-    >
-      Load more
-    </button>
-  </React.Fragment>
-);
-}} */}
+        </FirebaseAuthConsumer>
 
 
-    </FirebaseAuthProvider> )
+
+      </FirebaseAuthProvider>
+    </SiteHeader> )
   }
 
   const Public = () =>

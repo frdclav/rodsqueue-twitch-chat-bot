@@ -70,17 +70,7 @@ const UnAuthed = ( props ) =>
 
 
 		< Grid style={{ padding: '36px' }} container alignItems="center" direction="column" >
-			{/* <button
-          onClick={() =>
-          {
-            firebase
-              .app()
-              .auth()
-              .signInAnonymously();
-          }}
-        >
-          Sign in anonymously
-        </button> */}
+
 			<Grid item><h2>You're not signed in </h2></Grid>
 			<Grid item>
 				<FormGroup style={{ padding: '36px' }} >
