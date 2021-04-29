@@ -7,22 +7,34 @@ import { QueueItem } from "../QueueItem";
 const Queue = ( props ) =>
 {
   const { curWaitingQueueState } = useContext( WaitingQueueContext );
-  const theDbValue = props.dbValue ? props.dbValue.curQueueArr : curWaitingQueueState;
+  const theDbValue = props.dbValue ? props.dbValue.curQueueArr : null;
+  const ifNoItemsInQueue = () =>
+  {
+    return (
+      <p> queue is empty.</p>
+    )
+  }
+  const ifItemsInQueue = () =>
+  {
+    return (
+      <List>
+        <Grid style={{ padding: '10px' }} container direction="column">
+          {/* {curWaitingQueueState.curQueueArr.map(item => ( */}
+          {/* {theDbValue.curQueueArr.map((item) => ( */}
+          {Object.keys( theDbValue ).map( ( key, index ) =>
+
+          (
+            <QueueItem element={{ ...theDbValue[ key ], key }} isPublic={props.isPublic} />
+          )
+
+          )}
+        </Grid>
+      </List>
+    )
+  }
 
   return (
-    <List>
-      <Grid style={{ padding: '10px' }} container direction="column">
-        {/* {curWaitingQueueState.curQueueArr.map(item => ( */}
-        {/* {theDbValue.curQueueArr.map((item) => ( */}
-        {Object.keys( theDbValue ).map( ( key, index ) =>
-
-        (
-          <QueueItem element={{ ...theDbValue[ key ], key }} isPublic={props.isPublic} />
-        )
-
-        )}
-      </Grid>
-    </List>
+    theDbValue ? ifItemsInQueue() : ifNoItemsInQueue()
   );
 };
 

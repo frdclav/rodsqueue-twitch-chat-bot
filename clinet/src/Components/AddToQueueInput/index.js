@@ -51,9 +51,9 @@ const AddToQueueInput = ( props ) =>
           // const { key } = runMutation( { curQueueArr: newQueue } );
         }
         return (
-
-          <AddToQueueInputForm onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
-
+          <center>
+            <AddToQueueInputForm onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
+          </center>
 
         )
       }}

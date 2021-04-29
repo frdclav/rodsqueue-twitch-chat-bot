@@ -80,9 +80,8 @@ const App = ( props ) =>
                     setCurAddToQueueInputState,
                   }}
                 >
-                  <Grid style={{ padding: '100px' }} container direction="column" justify="space-around" alignItems="center" spacing={4}>
+                  <Grid container direction="column" justify="center" alignItems="center" >
                     <Grid item>
-                      {/* <ApprovedQueue /> */}
                       <AddToQueueInput dbValue={d.value ? d.value : `NULL`} />
 
 
@@ -118,7 +117,7 @@ const App = ( props ) =>
 
   const Main = () =>
   {
-    return ( <SiteHeader>
+    return (
       <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 
         <FirebaseAuthConsumer>
@@ -139,7 +138,7 @@ const App = ( props ) =>
 
 
       </FirebaseAuthProvider>
-    </SiteHeader> )
+    )
   }
 
   const Public = () =>
@@ -180,9 +179,13 @@ const App = ( props ) =>
     <Router>
       <Switch>
         <Route exact path="/">
+          <SiteHeader />
+
           <Main />
         </Route>
         <Route path="/main">
+          <SiteHeader />
+
           <Main />
         </Route>
         <Route path="/public">
