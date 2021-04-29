@@ -72,7 +72,7 @@ const QueueItem = ( props ) =>
 
   const { key, id, value } = props.element;
   const listItemId = key;
-  console.log( 'queue item props', props )
+  // console.log( 'queue item props', props )
   return (
     <Grid style={{ padding: '4px' }} item>
       <Paper style={{ background: 'rgba( 255, 255, 255, 0.8 )' }} variant="elevation" >

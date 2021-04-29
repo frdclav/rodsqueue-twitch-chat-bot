@@ -8,6 +8,7 @@ import { ApprovedQueue } from "./Components/ApprovedQueue";
 import { WaitingQueueContext } from "./Context/WaitingQueueContext";
 import { ApprovedQueueContext } from "./Context/ApprovedQueueContext";
 import { AddToQueueInputContext } from "./Context/AddToQueueInputContext";
+import { UnAuthed } from "./Components/UnAuthed"
 import
 {
   FirebaseDatabaseNode,
@@ -54,29 +55,7 @@ const App = ( props ) =>
   const IfUnAuthed = () =>
   {
     return (
-      <div>
-        <h2>You're not signed in </h2>
-        <button
-          onClick={() =>
-          {
-            firebase
-              .app()
-              .auth()
-              .signInAnonymously();
-          }}
-        >
-          Sign in anonymously
-        </button>
-        <button
-          onClick={() =>
-          {
-            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup( googleAuthProvider );
-          }}
-        >
-          Sign in with Google
-        </button>
-      </div>
+      <UnAuthed firebase={firebase} ></UnAuthed>
     );
   };
   const curShop = 'seanthenkyle'
@@ -87,7 +66,7 @@ const App = ( props ) =>
         <FirebaseDatabaseNode path={`/${curShop}`}>
           {( d ) =>
           {
-            console.log( 'd', d.value )
+            // console.log( 'd', d.value )
             return (
 
 
