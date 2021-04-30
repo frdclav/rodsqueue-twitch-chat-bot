@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Button, Input, FormGroup, FormLabel, ButtonGroup, Grid } from '@material-ui/core';
 import API from '../../Utils/API';
 
@@ -45,6 +45,8 @@ const UnAuthed = ( props ) =>
 			{
 				var errorCode = error.code;
 				var errorMessage = error.message;
+				console.log( errorCode, errorMessage )
+
 			} );
 	}
 	const handleGoogleLogin = () =>

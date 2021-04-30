@@ -1,18 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { ListItem, ListItemText, Button, ButtonGroup, Grid, Paper } from "@material-ui/core";
-import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
-import { ApprovedQueueContext } from "../../Context/ApprovedQueueContext";
 import API from "../../Utils/API"
 
 const QueueItem = ( props ) =>
 {
   const [ anchorEl, setAnchorEl ] = useState( false );
-  const { curWaitingQueueState, setCurWaitingQueueState } = useContext(
-    WaitingQueueContext
-  );
-  const { curApprovedQueueState, setCurApprovedQueueState } = useContext(
-    ApprovedQueueContext
-  );
+
+
 
   const handleSlideOpen = ( event ) =>
   {
@@ -41,20 +35,7 @@ const QueueItem = ( props ) =>
     };
   };
 
-  const handleApprove = ( element ) =>
-  {
-    return () =>
-    {
-      const rem = handleRemove( element );
-      rem();
-      let newArr = curApprovedQueueState.curQueueArr;
-      newArr.push( element );
 
-      setCurApprovedQueueState( { curQueueArr: newArr } );
-
-      console.log( "handleApprove", newArr );
-    };
-  };
   const handleMoveUp = ( element ) =>
   {
     return () =>
@@ -70,7 +51,7 @@ const QueueItem = ( props ) =>
     };
   };
 
-  const { key, id, value } = props.element;
+  const { key, value } = props.element;
   const listItemId = key;
   // console.log( 'queue item props', props )
   return (
@@ -99,7 +80,6 @@ const QueueItem = ( props ) =>
                   >
                     <Button onClick={handleMoveUp( props.element )}>move up</Button>
                     <Button onClick={handleMoveDown( props.element )}>move down</Button>
-                    {/* <Button onClick={handleApprove( props.element )}>Approve</Button> */}
                     <Button onClick={handleRemove( props.element )}>delete</Button>
                   </ButtonGroup>
                 </React.Fragment>
