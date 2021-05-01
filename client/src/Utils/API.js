@@ -13,7 +13,7 @@ const API = {
     addToQueueAPI: ( value ) =>
     {
 
-        axios.post( `${REACT_APP_FIREBASE_REST_API}/seanthenkyle/curQueueArr.json`, { id: ID(), value } ).then( ( response ) =>
+        axios.post( `${process.env.REACT_APP_FIREBASE_REST_API}/seanthenkyle/curQueueArr.json`, { id: ID(), value } ).then( ( response ) =>
         {
             console.log( response )
         } )
@@ -23,7 +23,7 @@ const API = {
 
     removeFromQueueAPI: ( value ) =>
     {
-        axios.delete( `${REACT_APP_FIREBASE_REST_API}/seanthenkyle/curQueueArr/${value}.json` ).then( ( response ) =>
+        axios.delete( `${process.env.REACT_APP_FIREBASE_REST_API}/seanthenkyle/curQueueArr/${value}.json` ).then( ( response ) =>
         {
             console.log( ' removeFromQUeueAPI', response )
         } )
@@ -32,7 +32,7 @@ const API = {
     checkIfUserExists: ( value ) =>
     {
 
-        axios.get( `${REACT_APP_FIREBASE_REST_API}/users/.json?orderBy="email"&startAt="${value}"` ).then( ( response ) =>
+        axios.get( `${process.env.REACT_APP_FIREBASE_REST_API}/users/.json?orderBy="email"&startAt="${value}"` ).then( ( response ) =>
         {
             console.log( 'response.data', Object.keys( response.data ).length > 0, response )
             return response.data
@@ -40,7 +40,7 @@ const API = {
     },
     createNewUser: ( value ) =>
     {
-        axios.get( `${REACT_APP_FIREBASE_REST_API}/users/${value.uid}.json` ).then( ( response ) =>
+        axios.get( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}.json` ).then( ( response ) =>
         {
             const snap = response.data
             console.log( 'createNewUser', response )
@@ -53,7 +53,7 @@ const API = {
             } else
             {
                 console.log( 'user does not exist', response )
-                axios.post( `${REACT_APP_FIREBASE_REST_API}/users/${value.uid}.json`, { value } ).then( ( response ) =>
+                axios.post( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}.json`, { value } ).then( ( response ) =>
                 {
                     return console.log( 'user created', response.data )
                 } )
@@ -66,14 +66,14 @@ const API = {
     },
     checkIfUserLinkedToStore: ( value ) =>
     {
-        return axios.get( `${REACT_APP_FIREBASE_REST_API}/users/${value.uid}/store.json` )
+        return axios.get( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}/store.json` )
 
 
     },
     setStore: async ( value ) =>
     {
         const { store } = value
-        return axios.post( `${REACT_APP_FIREBASE_REST_API}/users/${value.uid}/store.json`, { store } )
+        return axios.post( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}/store.json`, { store } )
 
     }
 }
