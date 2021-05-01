@@ -29,7 +29,7 @@ const LinkCheck = ( props ) =>
 	}
 	linkCheckHelper( props.user )
 	return ( <div>
-		{ curShop ? <Authed firebase={firebase} firebaseConfig={firebaseConfig} curShop={curShop}> </Authed> : <AuthedNotLinked></AuthedNotLinked>
+		{ curShop ? <Authed firebase={firebase} firebaseConfig={firebaseConfig} curShop={curShop}> </Authed> : <AuthedNotLinked firebase={firebase} firebaseConfig={firebaseConfig}></AuthedNotLinked>
 		}
 	</div>
 
