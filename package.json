@@ -23,6 +23,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "tmi.js": "^1.8.1"
+    "tmi.js": "^1.8.1",
+    "react-scripts": "^4.0.3",
   }
 }
