@@ -7,8 +7,7 @@
     "start:prod": "node bot.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && yarn run start",
-    "build": "cd client && yarn run build",
-    // "heroku-postbuild": "yarn run build"
+    "build": "cd client && yarn run build"
   },
   "devDependencies": {
     "concurrently": "^6.0.2",
