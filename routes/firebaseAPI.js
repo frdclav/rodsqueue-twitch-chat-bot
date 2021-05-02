@@ -1,7 +1,6 @@
 var express = require( 'express' );
 var router = express.Router();
 import axios from 'axios';
-import { roundToNearestMinutes } from 'date-fns';
 
 const ID = function ()
 {

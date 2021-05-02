@@ -13,7 +13,7 @@ const API = {
     addToQueueAPI: ( value ) =>
     {
 
-        axios.post( `/addtoqueueapi`, { id: ID(), value } ).then( ( response ) =>
+        axios.post( `/firebaseAPI/addtoqueueapi`, { id: ID(), value } ).then( ( response ) =>
         {
             console.log( response )
         } )
@@ -23,7 +23,7 @@ const API = {
 
     removeFromQueueAPI: ( value ) =>
     {
-        axios.post( `/removefromqueuapi`, value ).then( ( response ) =>
+        axios.post( `/firebaseAPI/removefromqueuapi`, value ).then( ( response ) =>
         {
             console.log( ' removeFromQUeueAPI', response )
         } )
@@ -32,7 +32,7 @@ const API = {
     checkIfUserExists: ( value ) =>
     {
 
-        axios.post( `/checkifuseresists`, value ).then( ( response ) =>
+        axios.post( `/firebaseAPI/checkifuseresists`, value ).then( ( response ) =>
         {
             // console.log( 'response.data', Object.keys( response.data ).length > 0, response )
             return response.data
@@ -40,7 +40,7 @@ const API = {
     },
     createNewUser: ( value ) =>
     {
-        axios.post( `/createnewuser`, value ).then( ( response ) =>
+        axios.post( `/firebaseAPI/createnewuser`, value ).then( ( response ) =>
         {
             return console.log( 'createnewuser', response )
 
@@ -48,13 +48,13 @@ const API = {
     },
     checkIfUserLinkedToStore: ( value ) =>
     {
-        return axios.post( `/checkiflinkedtostore`, value )
+        return axios.post( `/firebaseAPI/checkiflinkedtostore`, value )
 
 
     },
     setStore: async ( value ) =>
     {
-        return axios.post( `/store`, value )
+        return axios.post( `/firebaseAPI/store`, value )
 
     }
 }
