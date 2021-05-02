@@ -1,6 +1,7 @@
 var express = require( 'express' );
 var router = express.Router();
 var axios = require( 'axios' );
+require( 'dotenv' )
 
 const ID = function ()
 {
@@ -9,32 +10,40 @@ const ID = function ()
   // after the decimal.
   return "_" + Math.random().toString( 36 ).substr( 2, 9 );
 };
+const firebaseURL = process.env.REACT_APP_FIREBASE_REST_API || 'https://rodsqueue-default-rtdb.firebaseio.com'
 
-
+router.get( '/miccheck', ( req, res, next ) =>
+{
+  console.log( 'mic check' )
+  res.send( 'mic check 1 2 1 2' )
+} )
 
 router.post( '/addtoqueueapi', ( req, res, next ) =>
 {
   const value = req.body
-  axios.post( `${process.env.REACT_APP_FIREBASE_REST_API
-    }/seanthenkyle/curQueueArr.json`, {
+  axios.post( `${firebaseURL}/seanthenkyle/curQueueArr.json`, {
     id: ID(),
     value
   } ).then( ( response ) =>
   {
     res.send( response )
-  } )
+  } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 
 
 
-router.post( '/removefromqueueapi', ( req, res ) =>
+router.delete( '/removefromqueueapi/:value', ( req, res ) =>
 {
-  const value = req.body
-  axios.delete( `${process.env.REACT_APP_FIREBASE_REST_API
-    }/seanthenkyle/curQueueArr/${value}.json` ).then( ( response ) =>
-    {
-      res.send( response )
+  const value = req.params.value
+  axios.delete( `${firebaseURL}/seanthenkyle/curQueueArr/${value}.json` ).then( ( response ) =>
+  {
+    console.log( 'remove', value )
+
+    res.send( {
+      blah: `${firebaseURL}/seanthenkyle/curQueueArr/${value}.json`,
+      res: response
     } )
+  } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 
 
@@ -43,19 +52,18 @@ router.post( '/removefromqueueapi', ( req, res ) =>
 router.post( '/checkifuserexists', ( req, res, next ) =>
 {
   const value = req.body
-  axios.get( `${process.env.REACT_APP_FIREBASE_REST_API
-    }/users/.json?orderBy="email"&startAt="${value}"` ).then( ( response ) =>
-    {
-      console.log( 'response.data', Object.keys( response.data ).length > 0, response )
-      res.send( response )
-      return response.data
-    } )
+  axios.get( `${firebaseURL}/users/.json?orderBy="email"&startAt="${value}"` ).then( ( response ) =>
+  {
+    console.log( 'response.data', Object.keys( response.data ).length > 0, response )
+    res.send( response )
+    return response.data
+  } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 
 router.post( '/createnewuser', ( req, res, next ) =>
 {
   const value = req.body
-  axios.get( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}.json` ).then( ( response ) =>
+  axios.get( `${firebaseURL}/users/${value.uid}.json` ).then( ( response ) =>
   {
     const snap = response.data
     console.log( 'createNewUser', response )
@@ -69,7 +77,7 @@ router.post( '/createnewuser', ( req, res, next ) =>
     } else
     {
       console.log( 'user does not exist', response )
-      axios.post( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}.json`, { value } ).then( ( response ) =>
+      axios.post( `${firebaseURL}/users/${value.uid}.json`, { value } ).then( ( response ) =>
       {
         res.send( response )
         return console.log( 'user created', response.data )
@@ -77,16 +85,21 @@ router.post( '/createnewuser', ( req, res, next ) =>
     }
 
 
-  } )
+  } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 
 
-router.get( '/checkifuserlinkedtostore', ( req, res, next ) =>
+router.post( '/checkifuserlinkedtostore', ( req, res, next ) =>
 {
-  axios.get( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}/store.json` ).then( ( response ) =>
+  const value = req.body
+  // console.log( 'url', firebaseURL )
+  // console.log( 'check link 1', value.uid )
+
+  axios.get( `${firebaseURL}/users/${value.uid}/store.json` ).then( ( response ) =>
   {
-    res.send( response )
-  } )
+    // console.log( 'check link', response )
+    res.send( response.data )
+  } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 
 
@@ -94,7 +107,7 @@ router.post( '/setstore', ( req, res, next ) =>
 {
   const value = req.body
   const { store } = value
-  axios.post( `${process.env.REACT_APP_FIREBASE_REST_API}/users/${value.uid}/store.json`, { store } ).then( ( response ) => { res.send( response ) } )
+  axios.post( `${firebaseURL}/users/${value.uid}/store.json`, { store } ).then( ( response ) => { res.send( response ) } ).catch( ( err ) => res.send( new Error( err ) ) )
 
 } )
 module.exports = router;

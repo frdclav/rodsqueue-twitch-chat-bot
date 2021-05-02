@@ -23,7 +23,7 @@ const API = {
 
     removeFromQueueAPI: ( value ) =>
     {
-        axios.post( `/firebaseAPI/removefromqueuapi`, value ).then( ( response ) =>
+        axios.delete( `/firebaseAPI/removefromqueueapi/${value}` ).then( ( response ) =>
         {
             console.log( ' removeFromQUeueAPI', response )
         } )
@@ -48,7 +48,8 @@ const API = {
     },
     checkIfUserLinkedToStore: ( value ) =>
     {
-        return axios.post( `/firebaseAPI/checkiflinkedtostore`, value )
+        // console.log( 'checking', value )
+        return axios.post( `/firebaseAPI/checkifuserlinkedtostore`, value )
 
 
     },
