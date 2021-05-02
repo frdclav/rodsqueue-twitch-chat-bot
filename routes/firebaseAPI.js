@@ -97,9 +97,13 @@ router.post( '/checkifuserlinkedtostore', ( req, res, next ) =>
 
   axios.get( `${firebaseURL}/users/${value.uid}/store.json` ).then( ( response ) =>
   {
-    console.log( 'check link 2', response )
+    console.log( 'check link 2', response.config, )
     res.send( response.data )
-  } ).catch( ( err ) => res.send( new Error( err ) ) )
+  } ).catch( ( err ) =>
+  {
+    console.log( 'error link 2' )
+    res.send( new Error( err ) )
+  } )
 } )
 
 
