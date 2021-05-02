@@ -10,7 +10,7 @@ const ID = function ()
   // after the decimal.
   return "_" + Math.random().toString( 36 ).substr( 2, 9 );
 };
-const firebaseURL = process.env.REACT_APP_FIREBASE_REST_API || 'rodsqueue-default-rtdb.firebaseio.com'
+const firebaseURL = process.env.REACT_APP_FIREBASE_REST_API || 'https://rodsqueue-default-rtdb.firebaseio.com'
 
 router.get( '/miccheck', ( req, res, next ) =>
 {
@@ -18,6 +18,7 @@ router.get( '/miccheck', ( req, res, next ) =>
   res.send( 'mic check 1 2 1 2' )
 } )
 
+//TODO: FIX this in prod
 router.post( '/addtoqueueapi', ( req, res, next ) =>
 {
   const value = req.body
