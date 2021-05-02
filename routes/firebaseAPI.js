@@ -52,12 +52,13 @@ router.delete( '/removefromqueueapi/:value', ( req, res ) =>
 router.post( '/checkifuserexists', ( req, res, next ) =>
 {
   const value = req.body
-  axios.get( `${firebaseURL}/users/.json?orderBy="email"&startAt="${value}"` ).then( ( response ) =>
-  {
-    console.log( 'response.data', Object.keys( response.data ).length > 0, response )
-    res.send( response )
-    return response.data
-  } ).catch( ( err ) => res.send( new Error( err ) ) )
+  const url =
+    axios.get( `${firebaseURL}/users/.json?orderBy="email"&startAt="${value}"` ).then( ( response ) =>
+    {
+      console.log( 'response.data', Object.keys( response.data ).length > 0, response )
+      res.send( response )
+      return response.data
+    } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 
 router.post( '/createnewuser', ( req, res, next ) =>
@@ -92,18 +93,33 @@ router.post( '/createnewuser', ( req, res, next ) =>
 router.post( '/checkifuserlinkedtostore', ( req, res, next ) =>
 {
   const value = req.body
-  // console.log( 'url', firebaseURL )
-  console.log( 'check link 1', value.uid )
+  const url = `${firebaseURL}/users/${value.uid}/store.json`
+  console.log( 'url', url )
+  // console.log( 'check link 1', value.uid )
 
-  axios.get( `${firebaseURL}/users/${value.uid}/store.json` ).then( ( response ) =>
+  axios.get( url ).then( ( response ) =>
   {
     console.log( 'check link 2', response.config, )
     res.send( response.data )
-  } ).catch( ( err ) =>
+  } ).catch( function ( error )
   {
-    console.log( 'error link 2', err )
-    res.send( new Error( err ) )
-  } )
+    if ( error.response )
+    {
+      // Request made and server responded
+      console.log( error.response.data );
+      console.log( error.response.status );
+      console.log( error.response.headers );
+    } else if ( error.request )
+    {
+      // The request was made but no response was received
+      console.log( error.request );
+    } else
+    {
+      // Something happened in setting up the request that triggered an Error
+      console.log( 'Error', error.message );
+    }
+
+  } );
 } )
 
 
