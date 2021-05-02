@@ -56,7 +56,7 @@ const App = ( props ) =>
             if ( !isSignedIn )
             {
               console.log( 'unauthed' )
-              return <UnAuthed firebase={firebase} ></UnAuthed>
+              return <UnAuthed firebase={firebase} {...firebaseConfig}></UnAuthed>
 
 
             } else
