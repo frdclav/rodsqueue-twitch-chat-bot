@@ -12,12 +12,18 @@ app.use( cors() );
 // Serve up static assets (usually on heroku)
 // if ( process.env.NODE_ENV === "production" )
 // {
-app.use( express.static( "client/build" ) );
+// app.use( express.static( "client/build" ) );
 // Add routes, both API and view
 // app.use( routes );
-app.use( '/firebaseAPI', firebaseAPIRouter );
+// app.use( '/firebaseAPI', firebaseAPIRouter );
 
-
+// Serve up static assets (usually on heroku)
+if ( process.env.NODE_ENV === "production" )
+{
+  app.use( express.static( "client/build" ) );
+}
+// Add routes, both API and view
+app.use( routes );
 
 // Start the API server
 app.listen( PORT, function ()
