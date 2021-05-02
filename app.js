@@ -19,10 +19,10 @@ app.use( logger( 'dev' ) );
 app.use( express.json() );
 app.use( express.urlencoded( { extended: false } ) );
 app.use( cookieParser() );
-if ( process.env.NODE_ENV === "production" )
-{
-  app.use( express.static( "client/build" ) );
-}
+// if ( process.env.NODE_ENV === "production" )
+// {
+app.use( express.static( "client/build" ) );
+// }
 // app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', indexRouter);
@@ -54,7 +54,7 @@ module.exports = app;
 // const mongoose = require("mongoose");
 // const routes = require("./routes");
 // const app = express();
-// const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3002;
 
 // // Define middleware here
 // app.use(express.urlencoded({ extended: true }));
@@ -69,7 +69,8 @@ module.exports = app;
 // // Connect to the Mongo DB
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/ridersonthestormapp");
 
-// // Start the API server
-// app.listen(PORT, function () {
-//   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-// });
+// Start the API server
+app.listen( PORT, function ()
+{
+  console.log( `🌎  ==> API Server now listening on PORT ${PORT}!` );
+} );
