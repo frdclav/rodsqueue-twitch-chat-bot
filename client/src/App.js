@@ -9,7 +9,7 @@ import
   FirebaseDatabaseNode,
   FirebaseDatabaseProvider,
 } from "@react-firebase/database";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/auth"
 import
 {
