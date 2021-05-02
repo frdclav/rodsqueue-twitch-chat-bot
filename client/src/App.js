@@ -11,6 +11,7 @@ import
 } from "@react-firebase/database";
 import firebase from "firebase/app";
 import "firebase/auth"
+import "firebase/database"
 import
 {
   BrowserRouter as Router,
@@ -61,7 +62,7 @@ const App = ( props ) =>
 
             } else
             {
-              console.log( 'authed', user )
+              console.log( 'authed' )
               return <LinkCheck user={user} firebase={firebase} firebaseConfig={firebaseConfig}></LinkCheck>
 
               // const curShop = 'seanthenkyle'
