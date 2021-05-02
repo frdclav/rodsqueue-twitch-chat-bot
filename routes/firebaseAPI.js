@@ -1,6 +1,6 @@
 var express = require( 'express' );
 var router = express.Router();
-import axios from 'axios';
+var axios = require( 'axios' );
 
 const ID = function ()
 {
