@@ -3,7 +3,7 @@ const routes = require( "./routes" );
 const app = express();
 const cors = require( "cors" );
 const firebaseAPIRouter = require( './routes/firebaseAPI' );
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 // Define middleware here
 app.use( express.urlencoded( { extended: true } ) );

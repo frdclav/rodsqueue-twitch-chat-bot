@@ -9,7 +9,7 @@
 
 const path = require( "path" );
 const router = require( "express" ).Router();
-const apiRoutes = require( "./firebaseAPI" );
+const apiRoutes = require( "./firebaseAPI.js" );
 
 // API Routes
 router.use( "/firebaseApi", apiRoutes );
@@ -22,6 +22,5 @@ router.use( function ( req, res )
 
 module.exports = router;
 
-module.exports = router;
 
 
