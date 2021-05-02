@@ -101,7 +101,7 @@ router.post( '/checkifuserlinkedtostore', ( req, res, next ) =>
     res.send( response.data )
   } ).catch( ( err ) =>
   {
-    console.log( 'error link 2' )
+    console.log( 'error link 2', err )
     res.send( new Error( err ) )
   } )
 } )
