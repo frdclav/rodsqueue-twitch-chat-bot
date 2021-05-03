@@ -51,7 +51,13 @@ const QueueItem = ( props ) =>
     };
   };
 
-  const { key, value } = props.element;
+  let { key, value } = props.element;
+  if ( typeof value === 'object' )
+  {
+    console.log( 'value', JSON.stringify( value ) )
+    value = 'something went wrong'
+    console.log( value )
+  }
   const listItemId = key;
   // console.log( 'queue item props', props )
   return (
