@@ -12,8 +12,8 @@ const API = {
 
     addToQueueAPI: ( value ) =>
     {
-
-        axios.post( `/firebaseAPI/addtoqueueapi`, { id: ID(), value } ).then( ( response ) =>
+        console.log( 'addtoqueue', value )
+        axios.get( `/firebaseAPI/addtoqueueapi/${value}` ).then( ( response ) =>
         {
             console.log( response )
         } )

@@ -10,7 +10,7 @@ const ID = function ()
   // after the decimal.
   return "_" + Math.random().toString( 36 ).substr( 2, 9 );
 };
-const firebaseURL = process.env.REACT_APP_FIREBASE_REST_API || 'rodsqueue-default-rtdb.firebaseio.com'
+const firebaseURL = process.env.REACT_APP_FIREBASE_REST_API || 'https://rodsqueue-default-rtdb.firebaseio.com'
 
 router.get( '/miccheck', ( req, res, next ) =>
 {
@@ -18,12 +18,14 @@ router.get( '/miccheck', ( req, res, next ) =>
   res.send( 'mic check 1 2 1 2' )
 } )
 
-router.post( '/addtoqueueapi', ( req, res, next ) =>
+//TODO: FIX this in prod
+router.get( '/addtoqueueapi/:value', ( req, res, next ) =>
 {
-  const value = req.body
+  const value = req.params.value
+  console.log( 'addtoqueue', value )
   axios.post( `${firebaseURL}/seanthenkyle/curQueueArr.json`, {
     id: ID(),
-    value
+    value: `${value}`
   } ).then( ( response ) =>
   {
     res.send( response )
@@ -99,7 +101,7 @@ router.post( '/checkifuserlinkedtostore', ( req, res, next ) =>
 
   axios.get( url ).then( ( response ) =>
   {
-    console.log( 'check link 2', response.config, )
+    console.log( 'check link 2', response.data )
     res.send( response.data )
   } ).catch( function ( error )
   {
