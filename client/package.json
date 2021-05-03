@@ -2,6 +2,7 @@
   "name": "clinet",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3002",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@react-firebase/auth": "^0.2.10",

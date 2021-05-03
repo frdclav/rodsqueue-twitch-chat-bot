@@ -18,7 +18,7 @@ router.get( '/miccheck', ( req, res, next ) =>
   res.send( 'mic check 1 2 1 2' )
 } )
 
-//TODO: FIX this in prod
+
 router.get( '/addtoqueueapi/:value', ( req, res, next ) =>
 {
   const value = req.params.value
@@ -131,6 +131,21 @@ router.post( '/setstore', ( req, res, next ) =>
   const { store } = value
   axios.post( `${firebaseURL}/users/${value.uid}/store.json`, { store } ).then( ( response ) => { res.send( response ) } ).catch( ( err ) => res.send( new Error( err ) ) )
 
+} )
+
+router.get( '/clearqueue/:curShop', ( req, res, next ) =>
+{
+  const curShop = req.params.curShop
+  axios.delete( `${firebaseURL}/${curShop}/curQueueArr/.json` ).then( ( response ) =>
+  {
+    console.log( 'clearqueue for', curShop )
+
+
+    res.send( {
+      blah: `${firebaseURL}/${curShop}/curQueueArr/.json`,
+      res: response
+    } )
+  } ).catch( ( err ) => res.send( new Error( err ) ) )
 } )
 module.exports = router;
 

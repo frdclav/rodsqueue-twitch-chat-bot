@@ -50,7 +50,7 @@ const Authed = ( props ) =>
 										</Grid>
 
 										<Grid item>
-											<AddToQueueInput dbValue={d.value ? d.value : `NULL`} />
+											<AddToQueueInput curShop={props.curShop} dbValue={d.value ? d.value : `NULL`} />
 
 										</Grid>
 
