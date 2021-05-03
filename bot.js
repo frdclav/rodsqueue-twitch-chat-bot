@@ -81,7 +81,7 @@ function onMessageHandler ( target, context, msg, self )
         );
         axios.post( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json', { id: ID(), value: `${sender}: ${listOfItems}`, order_id: `${order_id}` } ).then( ( response ) =>
         {
-          console.log( response )
+          // console.log( response )
         } )
       } )
       .catch( ( error, response ) =>
