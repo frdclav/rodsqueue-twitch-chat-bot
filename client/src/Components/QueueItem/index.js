@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ListItem, ListItemText, Button, ButtonGroup, Grid, Paper } from "@material-ui/core";
 import API from "../../Utils/API"
+import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 
 const QueueItem = ( props ) =>
 {
   const [ anchorEl, setAnchorEl ] = useState( false );
-
+  const curQueueContext = useContext( WaitingQueueContext );
 
 
   const handleSlideOpen = ( event ) =>
@@ -41,6 +42,7 @@ const QueueItem = ( props ) =>
     return () =>
     {
       console.log( `moving up ${element}` );
+      console.log( 'curQueue', curQueueContext )
     };
   };
   const handleMoveDown = ( element ) =>
@@ -48,6 +50,8 @@ const QueueItem = ( props ) =>
     return () =>
     {
       console.log( `moving down ${element}` );
+      console.log( 'curQueue', curQueueContext )
+
     };
   };
 
@@ -79,7 +83,7 @@ const QueueItem = ( props ) =>
                   <br />
                   <br />
                   <ButtonGroup
-                    fullWidth="false"
+                    fullWidth={false}
                     color="primary"
                     size="small"
                     aria-label="text primary button group"

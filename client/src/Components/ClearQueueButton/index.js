@@ -59,7 +59,7 @@ const ClearQueueButton = ( props ) =>
                     <Grid container item>
                         <ButtonGroup
                             style={{ padding: '6px' }}
-                            fullWidth="false"
+                            fullWidth={false}
                             color="primary"
                             size="small"
                             aria-label="text primary button group" justify="center"

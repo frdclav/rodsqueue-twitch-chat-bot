@@ -12,15 +12,15 @@ const AddToQueueInput = ( props ) =>
 
   const [ inputData, setInputData ] = useState( '' );
   const [ theDbValue, setTheDbValue ] = useState( props )
-  useEffect( () =>
-  {
-    console.log( "inputData", inputData );
-  }, [ inputData ] );
-  useEffect( () =>
-  {
-    console.log( "props updating", props )
-    setTheDbValue( props )
-  }, [ props ] )
+  // useEffect( () =>
+  // {
+  //   console.log( "inputData", inputData );
+  // }, [ inputData ] );
+  // useEffect( () =>
+  // {
+  //   console.log( "props updating", props )
+  //   setTheDbValue( props )
+  // }, [ props ] )
   const handleSubmit = ( newValue ) =>
   {
     console.log( 'newValue', newValue );
