@@ -10,6 +10,14 @@ const ID = function ()
 
 const API = {
 
+    clearQueue: ( value ) =>
+    {
+        axios.get( `/firebaseAPI/clearqueue/${value}` ).then( ( response ) =>
+        {
+            console.log( response )
+        } )
+
+    },
     addToQueueAPI: ( value ) =>
     {
         console.log( 'addtoqueue', value )

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FirebaseDatabaseMutation } from "@react-firebase/database";
 import { AddToQueueInputForm } from "../AddToQueueInputForm"
+import { ClearQueueButton } from "../ClearQueueButton"
 import API from "../../Utils/API"
 
 const AddToQueueInput = ( props ) =>
@@ -20,27 +21,24 @@ const AddToQueueInput = ( props ) =>
     console.log( "props updating", props )
     setTheDbValue( props )
   }, [ props ] )
+  const handleSubmit = ( newValue ) =>
+  {
+    console.log( 'newValue', newValue );
+    console.log( 'props', theDbValue );
+    API.addToQueueAPI( newValue )
+  }
+  const handleClearQueue = () =>
+  {
 
+    console.log( 'clearqueue!', props.curShop )
+    API.clearQueue( props.curShop )
+  }
   return (
-    <FirebaseDatabaseMutation type="update" path="/">
-      {( { runMutation } ) =>
-      {
+    <center>
+      <AddToQueueInputForm handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
+      <ClearQueueButton handleClearQueue={handleClearQueue} curShop={props.curShop}></ClearQueueButton>
+    </center>
 
-        const handleSubmit = ( newValue ) =>
-        {
-          console.log( 'newValue', newValue );
-          console.log( 'props', theDbValue );
-          API.addToQueueAPI( newValue )
-        }
-        return (
-          <center>
-            <AddToQueueInputForm onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
-          </center>
-
-        )
-      }}
-
-    </FirebaseDatabaseMutation>
 
   )
 
