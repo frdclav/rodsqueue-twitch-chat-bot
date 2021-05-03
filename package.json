@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node app.js",
-    "start:dev": "concurrently \"node app.js\" \"yarn run client\"",
+    "start:prod": "concurrently \"node app.js\"  \"node bot.js\"",
+    "start:dev": "concurrently \"node app.js\" \"yarn run client\" \"node bot.js\"",
     "client": "cd client && yarn run start",
     "build": "cd client && yarn run build",
     "heroku-postbuild": "npm run build"
@@ -39,6 +39,7 @@
     "serve": "^11.3.2",
     "sweetalert2-react": "^0.8.3",
     "sweetalert2-react-content": "^3.3.2",
-    "tmi.js": "^1.8.1"
+    "tmi.js": "^1.8.1",
+    "concurrently": "^6.0.2"
   }
 }
