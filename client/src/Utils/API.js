@@ -6,7 +6,8 @@ const API = {
 
     clearQueue: ( value ) =>
     {
-        axios.get( `/firebaseAPI/clearqueue/${value}` ).then( ( response ) =>
+        console.log( 'clearqueu', value )
+        axios.post( `/firebaseAPI/addtoqueueapi`, [] ).then( ( response ) =>
         {
             console.log( response )
         } )
@@ -15,7 +16,7 @@ const API = {
     addToQueueAPI: ( value ) =>
     {
         console.log( 'addtoqueue', value )
-        axios.get( `/firebaseAPI/addtoqueueapi/${value}` ).then( ( response ) =>
+        axios.post( `/firebaseAPI/addtoqueueapi`, value ).then( ( response ) =>
         {
             console.log( response )
         } )

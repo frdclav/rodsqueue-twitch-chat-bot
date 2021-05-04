@@ -26,7 +26,7 @@ const AuthedHelper = ( props ) =>
 	}, [ props.curQueue ] )
 	return (
 
-		<WaitingQueueContext.Provider value={curQueue}>
+		<WaitingQueueContext.Provider value={{ curQueue, setCurQueue }}>
 
 
 			<Grid container direction="row" justify="space-around" alignItems="center" >
@@ -36,7 +36,7 @@ const AuthedHelper = ( props ) =>
 					</Grid>
 
 					<Grid item>
-						<AddToQueueInput curShop={props.curShop} dbValue={curQueue ? curQueue : `NULL`} />
+						<AddToQueueInput curShop={props.curShop} curQueue={curQueue} />
 
 					</Grid>
 

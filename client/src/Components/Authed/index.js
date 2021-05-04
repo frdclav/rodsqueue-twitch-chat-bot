@@ -36,7 +36,7 @@ const Authed = ( props ) =>
 					console.log( 'd', d.value )
 					return (
 
-						<AuthedHelper {...props} curQueue={d.value}></AuthedHelper>
+						<AuthedHelper {...props} curQueue={d.value ? d.value : []}></AuthedHelper>
 
 					);
 				}

@@ -35,7 +35,7 @@ const AddToQueueInput = ( props ) =>
   }
   return (
     <center>
-      <AddToQueueInputForm handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
+      <AddToQueueInputForm curQueue={props.curQueue} handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
       <ClearQueueButton handleClearQueue={handleClearQueue} curShop={props.curShop}></ClearQueueButton>
     </center>
 

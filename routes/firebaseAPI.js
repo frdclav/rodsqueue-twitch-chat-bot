@@ -19,13 +19,12 @@ router.get( '/miccheck', ( req, res, next ) =>
 } )
 
 
-router.get( '/addtoqueueapi/:value', ( req, res, next ) =>
+router.post( '/addtoqueueapi', ( req, res, next ) =>
 {
-  const value = req.params.value
+  const value = req.body
   console.log( 'addtoqueue', value )
-  axios.post( `${firebaseURL}/seanthenkyle/curQueueArr.json`, {
-    id: ID(),
-    value: `${value}`
+  axios.patch( `${firebaseURL}/seanthenkyle/.json`, {
+    curQueueArr: value
   } ).then( ( response ) =>
   {
     res.send( response )

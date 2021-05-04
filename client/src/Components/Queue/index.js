@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { List, Grid } from "@material-ui/core";
+import { List, Grid, ListItem } from "@material-ui/core";
 
 import { QueueItem } from "../QueueItem";
 const ID = function ()
@@ -28,7 +28,20 @@ const Queue = ( props ) =>
     return (
       <List>
         <Grid style={{ padding: '10px' }} container direction="column">
-          {Object.keys( theDbValue ).map( ( key, index ) =>
+          {/* {theDbValue} */}
+          {theDbValue.map( ( el ) =>
+          {
+            const itemKey = ID()
+            console.log( 'el', el )
+            // return (
+            //   <ListItem ><p>{`${el}`}</p></ListItem>
+            // )
+            return (
+              <QueueItem id={itemKey} element={el} isPublic={props.isPublic} key={itemKey} curQueue={props.dbValue} />
+            )
+
+          } )}
+          {/* {Object.keys( theDbValue ).map( ( key, index ) =>
           {
 
             const itemKey = ID()
@@ -38,7 +51,7 @@ const Queue = ( props ) =>
 
           }
 
-          )}
+          )} */}
         </Grid>
       </List>
     )
