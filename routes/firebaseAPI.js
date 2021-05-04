@@ -17,7 +17,66 @@ router.get( '/miccheck', ( req, res, next ) =>
   console.log( 'mic check' )
   res.send( 'mic check 1 2 1 2' )
 } )
+router.get( '/queuestatus/:curShop', ( req, res, next ) =>
+{
+  const curShop = req.params.curShop
+  console.log( 'queuestatus', curShop )
 
+  axios.get( `${firebaseURL}/${curShop}/queuestatus.json` ).then( ( response ) =>
+  {
+    res.send( response.data )
+  }
+  ).catch( function ( error )
+  {
+    if ( error.response )
+    {
+      // Request made and server responded
+      console.log( error.response.data );
+      console.log( error.response.status );
+      console.log( error.response.headers );
+    } else if ( error.request )
+    {
+      // The request was made but no response was received
+      console.log( error.request );
+    } else
+    {
+      // Something happened in setting up the request that triggered an Error
+      console.log( 'Error', error.message );
+    }
+
+  } );
+} )
+
+router.post( '/setqueuestatus/:curShop', ( req, res, next ) =>
+{
+  const curShop = req.body.curShop
+  const statusToSet = req.body.statusToSet
+  console.log( 'setqueuestatus', curShop, statusToSet )
+
+  axios.patch( `${firebaseURL}/${curShop}/.json`, { queuestatus: statusToSet } ).then( ( response ) =>
+  {
+    res.send( response.data )
+  }
+  ).catch( function ( error )
+  {
+    if ( error.response )
+    {
+      // Request made and server responded
+      console.log( error.response.data );
+      console.log( error.response.status );
+      console.log( error.response.headers );
+    } else if ( error.request )
+    {
+      // The request was made but no response was received
+      console.log( error.request );
+    } else
+    {
+      // Something happened in setting up the request that triggered an Error
+      console.log( 'Error', error.message );
+    }
+
+  } );
+} )
 
 router.post( '/addtoqueueapi', ( req, res, next ) =>
 {
@@ -95,12 +154,12 @@ router.post( '/checkifuserlinkedtostore', ( req, res, next ) =>
 {
   const value = req.body
   const url = `${firebaseURL}/users/${value.uid}/store.json`
-  console.log( 'url', url )
+  // console.log( 'url', url )
   // console.log( 'check link 1', value.uid )
 
   axios.get( url ).then( ( response ) =>
   {
-    console.log( 'check link 2', response.data )
+    // console.log( 'check link 2', response.data )
     res.send( response.data )
   } ).catch( function ( error )
   {

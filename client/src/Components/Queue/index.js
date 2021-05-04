@@ -32,7 +32,7 @@ const Queue = ( props ) =>
           {theDbValue.map( ( el ) =>
           {
             const itemKey = ID()
-            console.log( 'el', el )
+            // console.log( 'el', el )
             // return (
             //   <ListItem ><p>{`${el}`}</p></ListItem>
             // )

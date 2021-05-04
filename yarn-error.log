@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/local/bin/yarn add sweetalert2 sweetalert-2-react-content
+  /usr/bin/node /usr/local/bin/yarn add toggleswitch
 
 PATH: 
   /home/frdclav/gems/bin:/home/frdclav/.vscode-server/bin/3c4e3df9e89829dce27b7b5c24508306b151f30d/bin:/home/frdclav/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Users/rodson/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/rodson/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/sweetalert-2-react-content: Not found
+  Error: https://registry.yarnpkg.com/toggleswitch: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66988:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140662:22)
       at Request.emit (events.js:198:13)
@@ -33,8 +33,8 @@ npm manifest:
     "private": true,
     "scripts": {
       "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-      "start:prod": "node app.js",
-      "start:dev": "concurrently \"node app.js\" \"yarn run client\"",
+      "start:prod": "concurrently \"node app.js\"  \"node bot.js\"",
+      "start:dev": "concurrently \"node app.js\" \"yarn run client\" \"node bot.js\"",
       "client": "cd client && yarn run start",
       "build": "cd client && yarn run build",
       "heroku-postbuild": "npm run build"
@@ -67,7 +67,9 @@ npm manifest:
       "react-scripts": "^4.0.3",
       "serve": "^11.3.2",
       "sweetalert2-react": "^0.8.3",
-      "tmi.js": "^1.8.1"
+      "sweetalert2-react-content": "^3.3.2",
+      "tmi.js": "^1.8.1",
+      "concurrently": "^6.0.2"
     }
   }
 
@@ -12151,6 +12153,11 @@ Lockfile:
       stable "^0.1.8"
       unquote "~1.1.1"
       util.promisify "~1.0.0"
+  
+  sweetalert2-react-content@^3.3.2:
+    version "3.3.2"
+    resolved "https://registry.yarnpkg.com/sweetalert2-react-content/-/sweetalert2-react-content-3.3.2.tgz#2ef1ce2bc1c2abef4a8a1a848ed120516c826c31"
+    integrity sha512-BZvKHOFia/jwrsuZze8vlsH7GHLeQda3O+v/dWhk3n9tr72URWS29yv03JM9mihlSamljIOka1yjpd+VmCvlSA==
   
   sweetalert2-react@^0.8.3:
     version "0.8.3"

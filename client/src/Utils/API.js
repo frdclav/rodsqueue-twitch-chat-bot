@@ -4,6 +4,18 @@ import axios from 'axios';
 
 const API = {
 
+    queueStatus: ( value ) =>
+    {
+        console.log( 'checkingStatus' )
+        return axios.get( `/firebaseAPI/queuestatus/${value}` )
+    },
+
+    setQueueStatus: ( value ) =>
+    {
+        console.log( 'settingStatus', value )
+        return axios.post( `/firebaseAPI/setqueuestatus/${value.curShop}`, value )
+    },
+
     clearQueue: ( value ) =>
     {
         console.log( 'clearqueu', value )
