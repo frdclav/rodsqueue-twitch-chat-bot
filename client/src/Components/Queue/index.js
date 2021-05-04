@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
-import { List, Grid } from "@material-ui/core";
+import { List, Grid, ListItem } from "@material-ui/core";
 
 import { QueueItem } from "../QueueItem";
-
+const ID = function ()
+{
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return "_" + Math.random().toString( 36 ).substr( 2, 9 );
+};
 const Queue = ( props ) =>
 {
   const theDbValue = props.dbValue ? props.dbValue.curQueueArr : null;
-  useEffect( () =>
-  {
-    console.log( "Queue props updating", props )
+  // useEffect( () =>
+  // {
+  //   console.log( "Queue props updating", props )
 
-  }, [ props ] )
+  // }, [ props ] )
   const ifNoItemsInQueue = () =>
   {
     return (
@@ -22,13 +28,30 @@ const Queue = ( props ) =>
     return (
       <List>
         <Grid style={{ padding: '10px' }} container direction="column">
-          {Object.keys( theDbValue ).map( ( key, index ) =>
+          {/* {theDbValue} */}
+          {theDbValue.map( ( el ) =>
+          {
+            const itemKey = ID()
+            console.log( 'el', el )
+            // return (
+            //   <ListItem ><p>{`${el}`}</p></ListItem>
+            // )
+            return (
+              <QueueItem id={itemKey} element={el} isPublic={props.isPublic} key={itemKey} curQueue={props.dbValue} />
+            )
 
-          (
-            <QueueItem element={{ ...theDbValue[ key ], key }} isPublic={props.isPublic} />
-          )
+          } )}
+          {/* {Object.keys( theDbValue ).map( ( key, index ) =>
+          {
 
-          )}
+            const itemKey = ID()
+            return (
+              <QueueItem element={{ ...theDbValue[ key ], key }} isPublic={props.isPublic} key={itemKey} />
+            )
+
+          }
+
+          )} */}
         </Grid>
       </List>
     )

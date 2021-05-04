@@ -83,7 +83,7 @@ const UnAuthed = ( props ) =>
 					<Input type='password' onChange={( e ) => { setPasswordInput( e.target.value ) }} ></Input>
 					<ButtonGroup
 						style={{ padding: '36px' }}
-						fullWidth="false"
+						fullWidth={false}
 						color="primary"
 						size="small"
 						aria-label="text primary button group"

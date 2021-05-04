@@ -12,15 +12,15 @@ const AddToQueueInput = ( props ) =>
 
   const [ inputData, setInputData ] = useState( '' );
   const [ theDbValue, setTheDbValue ] = useState( props )
-  useEffect( () =>
-  {
-    console.log( "inputData", inputData );
-  }, [ inputData ] );
-  useEffect( () =>
-  {
-    console.log( "props updating", props )
-    setTheDbValue( props )
-  }, [ props ] )
+  // useEffect( () =>
+  // {
+  //   console.log( "inputData", inputData );
+  // }, [ inputData ] );
+  // useEffect( () =>
+  // {
+  //   console.log( "props updating", props )
+  //   setTheDbValue( props )
+  // }, [ props ] )
   const handleSubmit = ( newValue ) =>
   {
     console.log( 'newValue', newValue );
@@ -35,7 +35,7 @@ const AddToQueueInput = ( props ) =>
   }
   return (
     <center>
-      <AddToQueueInputForm handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
+      <AddToQueueInputForm curQueue={props.curQueue} handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} onChange={( e ) => setInputData( e.target.value )}></AddToQueueInputForm>
       <ClearQueueButton handleClearQueue={handleClearQueue} curShop={props.curShop}></ClearQueueButton>
     </center>
 

@@ -1,18 +1,13 @@
 
 import axios from 'axios';
-const ID = function ()
-{
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
-    return "_" + Math.random().toString( 36 ).substr( 2, 9 );
-};
+
 
 const API = {
 
     clearQueue: ( value ) =>
     {
-        axios.get( `/firebaseAPI/clearqueue/${value}` ).then( ( response ) =>
+        console.log( 'clearqueu', value )
+        axios.post( `/firebaseAPI/addtoqueueapi`, [] ).then( ( response ) =>
         {
             console.log( response )
         } )
@@ -21,7 +16,7 @@ const API = {
     addToQueueAPI: ( value ) =>
     {
         console.log( 'addtoqueue', value )
-        axios.get( `/firebaseAPI/addtoqueueapi/${value}` ).then( ( response ) =>
+        axios.post( `/firebaseAPI/addtoqueueapi`, value ).then( ( response ) =>
         {
             console.log( response )
         } )
