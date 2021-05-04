@@ -79,10 +79,26 @@ function onMessageHandler ( target, context, msg, self )
           //  Your items are: ${listOfItems}`
           `${sender}, I've confirmed your order. Adding you to the queue now!`
         );
-        axios.post( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json', { id: ID(), value: `${sender}: ${listOfItems}`, order_id: `${order_id}` } ).then( ( response ) =>
+        const newItem = `${sender}: ${listOfItems}`
+        axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json` ).then( ( res ) =>
         {
-          // console.log( response )
+          if ( res.data )
+          {
+            const newArr = res.data
+            newArr.push( newItem )
+            axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: newArr } ).then( ( response ) =>
+            {
+              // console.log( response )
+            } )
+          } else
+          {
+            axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: [ newItem ] } ).then( ( response ) =>
+            {
+              // console.log( response )
+            } )
+          }
         } )
+
       } )
       .catch( ( error, response ) =>
       {
