@@ -27,6 +27,7 @@ client.on( "connected", onConnectedHandler );
 
 // Connect to Twitch:
 client.connect();
+let playCounter = 0
 
 // Called every time a message comes in
 function onMessageHandler ( target, context, msg, self )
@@ -45,7 +46,7 @@ function onMessageHandler ( target, context, msg, self )
   //   client.say(target, `You rolled a ${num}`);
   //   console.log(`* Executed ${commandName} command`);
   // } else
-
+  const sender = context.username;
   //expecting !queue <order number from shopify>
   // if the order is found, and paid for, then we should add to the queue -- check if there are other statuses
   // if order is found but not paid for, then we should let the user know we are waiting on payment confrimation and try agian?
@@ -54,72 +55,124 @@ function onMessageHandler ( target, context, msg, self )
   {
     console.log( `msg: ${msg}` );
     const order_id = commandName[ 1 ];
-    console.log( `Checking order ${commandName[ 1 ]}` );
-    const url = `https://${process.env.SHOPIFY_API}:${process.env.SHOPIFY_PASSWORD}@${process.env.SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
-    const sender = context.username;
-    axios
-      .get( url )
-      .then( ( response ) =>
+    axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/queuestatus.json` ).then( ( response ) =>
+    {
+      console.log( 'queuestatus', response.data )
+      if ( !response.data )
       {
-        console.log( `status: ${response.status}` );
-        // console.log(`data: ${JSON.stringify(response.data)}`);
-        console.log(
-          `financial_status: ${response.data.orders[ 0 ].financial_status}`
-        );
-        // console.log(
-        //   `financial_status: ${response.data.order.financial_status}`
-        // );
-        const lineItems = response.data.orders[ 0 ].line_items;
-        const listOfItems = lineItems.map(
-          ( el ) => `${el.quantity} x ${el.name}`
-        );
         client.say(
           target,
           // `${sender},I've found order_id: ${order_id}.
           //  Your items are: ${listOfItems}`
-          `${sender}, I've confirmed your order. Adding you to the queue now!`
+          `${sender}, the queue is closed!`
         );
-        const newItem = `${sender}: ${listOfItems}`
-        axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json` ).then( ( res ) =>
-        {
-          if ( res.data )
-          {
-            const newArr = res.data
-            newArr.push( newItem )
-            axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: newArr } ).then( ( response ) =>
-            {
-              // console.log( response )
-            } )
-          } else
-          {
-            axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: [ newItem ] } ).then( ( response ) =>
-            {
-              // console.log( response )
-            } )
-          }
-        } )
-
-      } )
-      .catch( ( error, response ) =>
+      }
+      else
       {
-        console.log( error.response.status );
-        console.log( `context: ${JSON.stringify( context )}` );
-        client.say(
-          target,
-          `${sender}, I can't find this order_id: ${order_id}`
-        );
-      } );
+
+        console.log( `Checking order ${commandName[ 1 ]}` );
+        const url = `https://${process.env.SHOPIFY_API}:${process.env.SHOPIFY_PASSWORD}@${process.env.SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
+
+        axios
+          .get( url )
+          .then( ( response ) =>
+          {
+            console.log( `status: ${response.status}` );
+            // console.log(`data: ${JSON.stringify(response.data)}`);
+            console.log(
+              `financial_status: ${response.data.orders[ 0 ].financial_status}`
+            );
+            // console.log(
+            //   `financial_status: ${response.data.order.financial_status}`
+            // );
+            const lineItems = response.data.orders[ 0 ].line_items;
+            const listOfItems = lineItems.map(
+              ( el ) => `${el.quantity} x ${el.name}`
+            );
+            client.say(
+              target,
+              // `${sender},I've found order_id: ${order_id}.
+              //  Your items are: ${listOfItems}`
+              `${sender}, I've confirmed your order. Adding you to the queue now!`
+            );
+            const newItem = {
+              id: ID(), order_id: order_id, message: `${sender}: ${listOfItems}`
+            }
+            axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json` ).then( ( res ) =>
+            {
+              if ( res.data )
+              {
+                const newArr = res.data
+                newArr.push( newItem )
+                axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: newArr } ).then( ( response ) =>
+                {
+                  // console.log( response )
+                } )
+              } else
+              {
+                axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: [ newItem ] } ).then( ( response ) =>
+                {
+                  // console.log( response )
+                } )
+              }
+            } )
+
+          } )
+          .catch( ( error, response ) =>
+          {
+            console.log( error.response.status );
+            console.log( `context: ${JSON.stringify( context )}` );
+            client.say(
+              target,
+              `${sender}, I can't find this order_id: ${order_id}`
+            );
+          } );
+
+      }
+    } ).catch( ( error, response ) =>
+    {
+      // console.log( error.response.status );
+      console.log( `context: ${JSON.stringify( error )}` );
+
+    } );
+
+  }
+  // my giveaway burner logic - essentially, if we count 10 people run the play command, the bot also plays. 
+  // TODO: figure out a way to reset the counter after a marbles game is run
+  else if ( commandName[ 0 ] === "!play" ) 
+  {
+    console.log( playCounter, 'play before' )
+
+    playCounter++
+
+    console.log( playCounter, 'play after' )
+    if ( playCounter === 10 )
+    {
+      client.say(
+        target,
+        `!play`
+      );
+
+    }
+
+  }
+  // leaving in the dice command
+  else if ( commandName[ 0 ] === "!dice" )
+  {
+    const num = rollDice();
+    client.say( target, `${sender}, you rolled a ${num}` );
+    console.log( `* Executed ${commandName} command` );
   } else
   {
     console.log( `* Unknown command ${commandName}` );
   }
 }
-
 // Function called when the "dice" command is issued
-// function rollDice() {
-//   const sides = 6;
-//   return Math.floor(Math.random() * sides) + 1;
-// }
+function rollDice ()
+{
+  const sides = 6;
+  return Math.floor( Math.random() * sides ) + 1;
+}
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler ( addr, port )
