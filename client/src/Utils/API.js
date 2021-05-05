@@ -6,31 +6,31 @@ const API = {
 
     queueStatus: ( value ) =>
     {
-        console.log( 'checkingStatus' )
+        // console.log( 'checkingStatus' )
         return axios.get( `/firebaseAPI/queuestatus/${value}` )
     },
 
     setQueueStatus: ( value ) =>
     {
-        console.log( 'settingStatus', value )
+        // console.log( 'settingStatus', value )
         return axios.post( `/firebaseAPI/setqueuestatus/${value.curShop}`, value )
     },
 
     clearQueue: ( value ) =>
     {
-        console.log( 'clearqueu', value )
+        // console.log( 'clearqueu', value )
         axios.post( `/firebaseAPI/addtoqueueapi`, [] ).then( ( response ) =>
         {
-            console.log( response )
+            // console.log( response )
         } )
 
     },
     addToQueueAPI: ( value ) =>
     {
-        console.log( 'addtoqueue', value )
+        // console.log( 'addtoqueue', value )
         axios.post( `/firebaseAPI/addtoqueueapi`, value ).then( ( response ) =>
         {
-            console.log( response )
+            // console.log( response )
         } )
 
 
@@ -40,7 +40,7 @@ const API = {
     {
         axios.delete( `/firebaseAPI/removefromqueueapi/${value}` ).then( ( response ) =>
         {
-            console.log( ' removeFromQUeueAPI', response )
+            // console.log( ' removeFromQUeueAPI', response )
         } )
     }
     ,

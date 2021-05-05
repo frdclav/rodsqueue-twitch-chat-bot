@@ -130,7 +130,7 @@ const QueueItem = ( props ) =>
         >
           <Grid container alignItems='center' direction='column'>
             <Grid item>
-              <ListItemText primary={props.element} primaryTypographyProps={{ display: 'block', variant: 'h3' }}>{props.element}</ListItemText>
+              <ListItemText primary={props.element.message} primaryTypographyProps={{ display: 'block', variant: 'h3' }}>{props.element}</ListItemText>
 
             </Grid>
             <Grid item>
