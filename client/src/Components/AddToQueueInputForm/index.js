@@ -7,6 +7,13 @@ const AddToQueueInputForm = ( props ) =>
   const [ inputData, setInputData ] = useState( '' )
   const [ curQueue, setCurQueue ] = useState( props.curQueue )
   const [ handleSubmit, setHandleSubmit ] = useState( ( e ) => { } )
+  const ID = function ()
+  {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return "_" + Math.random().toString( 36 ).substr( 2, 9 );
+  };
 
   useEffect( () =>
   {
@@ -20,7 +27,7 @@ const AddToQueueInputForm = ( props ) =>
       if ( props.curQueue.length !== 0 )
       {
         let newQueue = props.curQueue.curQueueArr
-        newQueue.push( inputData )
+        newQueue.push( { id: ID(), message: inputData } )
         console.log( 'handleSubmit', newQueue )
 
         props.onSubmit( newQueue )
