@@ -1,14 +1,10 @@
-import React, { useState, forceUpdate, useEffect } from "react";
-import { Grid, Button, ButtonGroup, Input, FormLabel, FormGroup } from "@material-ui/core";
+import React from "react";
+import { Grid, Button, ButtonGroup, FormGroup } from "@material-ui/core";
 import API from "../../Utils/API.js"
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-import { ToggleSwitch } from '../ToggleSwitch'
 import
 {
     FirebaseDatabaseNode
 } from "@react-firebase/database";
-const MySwal = withReactContent( Swal )
 const QueueSwitch = ( props ) =>
 {
     // const [ showSwal, setShowSwal ] = useState( false )
@@ -137,7 +133,7 @@ const QueueSwitch = ( props ) =>
                     {
                         if ( d.value )
                         {
-                            console.log( 'closing queue' )
+                            // console.log( 'closing queue' )
                             // props.handleClearQueue( props.curShop )
                             // setShowSwal( false )
                             // props.onSubmit( inputData )
@@ -149,7 +145,7 @@ const QueueSwitch = ( props ) =>
                             } )
                         } else
                         {
-                            console.log( 'opening queue' )
+                            // console.log( 'opening queue' )
                             // props.handleClearQueue( props.curShop )
                             // setShowSwal( false )
                             // props.onSubmit( inputData )

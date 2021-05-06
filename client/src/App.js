@@ -56,13 +56,13 @@ const App = ( props ) =>
           {
             if ( !isSignedIn )
             {
-              console.log( 'unauthed' )
+              // console.log( 'unauthed' )
               return <UnAuthed firebase={firebase} {...firebaseConfig}></UnAuthed>
 
 
             } else
             {
-              console.log( 'authed' )
+              // console.log( 'authed' )
               return <LinkCheck user={user} firebase={firebase} firebaseConfig={firebaseConfig}></LinkCheck>
 
               // const curShop = 'seanthenkyle'
@@ -110,7 +110,7 @@ const App = ( props ) =>
         <FirebaseDatabaseNode path={`/${storeName}`}>
           {( d ) =>
           {
-            console.log( 'd', d.value )
+            // console.log( 'd', d.value )
             return (
 
 
@@ -119,7 +119,7 @@ const App = ( props ) =>
               >
 
 
-                <Queue dbValue={d.value} display="" isPublic={true} />
+                <Queue dbValue={d.value ? d.value : []} display="" isPublic={true} />
 
               </WaitingQueueContext.Provider>
 

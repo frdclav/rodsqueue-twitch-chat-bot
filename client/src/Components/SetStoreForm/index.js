@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Button, ButtonGroup, Input, FormLabel, FormGroup } from "@material-ui/core";
-import { ClearQueueButton } from "../ClearQueueButton";
-import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
-import bcryptjs from 'bcryptjs'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import API from '../../Utils/API'
@@ -30,17 +27,10 @@ const SetStoreForm = ( props ) =>
   const [ nameInputData, setNameInputData ] = useState( '' )
   const [ pwInputData, setPwInputData ] = useState( '' )
 
-  const [ curQueue, setCurQueue ] = useState( props.curQueue )
   const [ handleSubmit, setHandleSubmit ] = useState( ( e ) => { } )
   const [ handleCreate, setHandleCreate ] = useState( ( e ) => { } )
 
-  const ID = function ()
-  {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
-    return "_" + Math.random().toString( 36 ).substr( 2, 9 );
-  };
+
   const checkPassword = ( inputtxt ) =>
   {
     const passw = /^[A-Za-z]\w{7,14}$/;
@@ -75,7 +65,7 @@ const SetStoreForm = ( props ) =>
       }
       else
       {
-        console.log( 'submit!', user, nameInputData, pwInputData )
+        // console.log( 'submit!', user, nameInputData, pwInputData )
         // check if store exists
         API.setStore( { user, storename: nameInputData, password: pwInputData } ).then( ( response ) =>
         {
@@ -84,7 +74,7 @@ const SetStoreForm = ( props ) =>
           {
             // if store exists, link store to user
 
-            console.log( 'store exists' )
+            // console.log( 'store exists' )
 
 
           }
@@ -92,7 +82,7 @@ const SetStoreForm = ( props ) =>
           {
             // if store does not exists -- error
 
-            console.log( 'store does not exist' )
+            // console.log( 'store does not exist' )
             showPwCheckFailSwal()
           }
 
@@ -134,7 +124,7 @@ const SetStoreForm = ( props ) =>
       }
       else
       {
-        console.log( 'create!', user, nameInputData, pwInputData )
+        // console.log( 'create!', user, nameInputData, pwInputData )
         //Check if store exists
         API.checkStore( { user, storename: nameInputData, password: pwInputData } ).then( ( response ) =>
         {
@@ -142,14 +132,14 @@ const SetStoreForm = ( props ) =>
           if ( response.data )
           {
             //if store exists -- error s
-            console.log( 'store exists' )
+            // console.log( 'store exists' )
             showPwCheckFailSwal()
 
           }
           else
           {
             //if store does not exist create store/link store to user
-            console.log( 'store does not exist creating store' )
+            // console.log( 'store does not exist creating store' )
             API.createStore( { user, storename: nameInputData, password: pwInputData } ).then( ( response ) =>
             {
               API.setStore( { user, storename: nameInputData, password: pwInputData } ).then( ( response ) =>
@@ -159,7 +149,7 @@ const SetStoreForm = ( props ) =>
                 {
                   // if store exists, link store to user
 
-                  console.log( 'store exists' )
+                  // console.log( 'store exists' )
 
 
                 }
@@ -167,7 +157,7 @@ const SetStoreForm = ( props ) =>
                 {
                   // if store does not exists -- error
 
-                  console.log( 'store does not exist' )
+                  // console.log( 'store does not exist' )
                   showPwCheckFailSwal()
                 }
 

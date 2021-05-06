@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { List, Grid, ListItem } from "@material-ui/core";
+import React from "react";
+import { List, Grid } from "@material-ui/core";
 
 import { QueueItem } from "../QueueItem";
 const ID = function ()

@@ -7,7 +7,6 @@ import
 } from "@react-firebase/database";
 import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 import { AddToQueueInputContext } from "../../Context/AddToQueueInputContext";
-import { Link } from "react-router-dom";
 import { SetStoreForm } from '../SetStoreForm';
 
 const AuthedNotLinked = ( props ) =>

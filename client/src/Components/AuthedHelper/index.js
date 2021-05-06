@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, Typography } from '@material-ui/core';
-import
-{
-	FirebaseDatabaseNode,
-	FirebaseDatabaseProvider,
-} from "@react-firebase/database";
+
 import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
-import { AddToQueueInputContext } from "../../Context/AddToQueueInputContext";
 import { AddToQueueInput } from "../AddToQueueInput";
 import { Link } from "react-router-dom";
 import { Queue } from "../Queue";
@@ -15,13 +10,12 @@ const AuthedHelper = ( props ) =>
 {
 	const firebase = props.firebase
 
-	const firebaseConfig = props.firebaseConfig;
 	const [ curQueue, setCurQueue ] = useState( props.curQueue )
 	const curShop = props.curShop
 
 	useEffect( () =>
 	{
-		console.log( 'curQueue', curQueue )
+		// console.log( 'curQueue', curQueue )
 		setCurQueue( props.curQueue )
 	}, [ props.curQueue ] )
 	return (

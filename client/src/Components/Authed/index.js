@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Grid, Typography } from '@material-ui/core';
+import React from 'react';
 import
 {
 	FirebaseDatabaseNode,
 	FirebaseDatabaseProvider,
 } from "@react-firebase/database";
-import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
-import { AddToQueueInputContext } from "../../Context/AddToQueueInputContext";
-import { AddToQueueInput } from "../AddToQueueInput";
-import { Link } from "react-router-dom";
-import { Queue } from "../Queue";
 import { AuthedHelper } from '../AuthedHelper';
 
 const Authed = ( props ) =>
