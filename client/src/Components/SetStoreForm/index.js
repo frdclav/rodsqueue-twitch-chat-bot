@@ -211,8 +211,14 @@ const SetStoreForm = ( props ) =>
               color="primary"
               size="small"
               aria-label="text primary button group" justify="center"
-            ><Button color='primary' onClick={( e ) => { handleCreate( e ) }}>Create</Button>
-              <Button color='primary' onClick={( e ) => { handleSubmit( e ) }}>Submit</Button>
+            ><Button
+              style={{ padding: '6px' }}
+
+              color='primary' onClick={( e ) => { handleCreate( e ) }}>Create a new Store</Button>
+              <Button
+                style={{ padding: '6px' }}
+
+                color='primary' onClick={( e ) => { handleSubmit( e ) }}>Link to an existing Store</Button>
             </ButtonGroup>
 
           </Grid>
