@@ -53,7 +53,7 @@ const API = {
         // console.log( 'addtoqueue', value )
         axios.post( `/firebaseAPI/addtoqueueapi`, value ).then( ( response ) =>
         {
-            console.log( response )
+            // console.log( response )
         } )
 
 

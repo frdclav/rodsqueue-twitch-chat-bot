@@ -17,7 +17,7 @@ const AddToQueueInputForm = ( props ) =>
 
   useEffect( () =>
   {
-    console.log( 'curQueue', props.curQueue )
+    // console.log( 'curQueue', props.curQueue )
     setCurQueue( props.curQueue )
     let newSubmit = ( e ) =>
     {
@@ -28,14 +28,14 @@ const AddToQueueInputForm = ( props ) =>
       {
         let newQueue = props.curQueue.curQueueArr
         newQueue.push( { id: ID(), message: inputData } )
-        console.log( 'handleSubmit', newQueue )
+        // console.log( 'handleSubmit', newQueue )
 
         props.onSubmit( newQueue )
 
       } else
       {
         let newQueue = [ inputData ]
-        console.log( 'empty arr so add handleSubmit', newQueue )
+        // console.log( 'empty arr so add handleSubmit', newQueue )
         props.onSubmit( newQueue )
 
       }
