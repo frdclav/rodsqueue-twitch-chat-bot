@@ -34,7 +34,7 @@ router.post( '/checkstore', ( req, res, next ) =>
       res.send( true )
     } else
     {
-      console.log( 'store does not exist' )
+      // console.log( 'store does not exist' )
       res.send( false )
     }
   }
@@ -89,7 +89,7 @@ router.post( '/createstore', ( req, res, next ) =>
 } )
 router.post( '/setstore', ( req, res, next ) =>
 {
-  console.log( 'setstore', req.body )
+  // console.log( 'setstore', req.body )
   axios.get( `${firebaseURL}/${req.body.storename}.json` ).then( ( response ) => 
   {
     if ( response.data && bcryptjs.compareSync( req.body.password, response.data.password ) )
@@ -212,7 +212,7 @@ router.post( '/addtoqueueapi', ( req, res, next ) =>
 {
   const value = req.body.value
   const storename = req.body.storename
-  console.log( 'addtoqueue', storename, value )
+  // console.log( 'addtoqueue', storename, value )
   axios.patch( `${firebaseURL}/${storename}/.json`, {
     curQueueArr: value
   } ).then( ( response ) =>
@@ -269,7 +269,7 @@ router.post( '/createnewuser', ( req, res, next ) =>
 
     } else
     {
-      console.log( 'user does not exist', response )
+      // console.log( 'user does not exist', response )
       axios.post( `${firebaseURL}/users/${value.uid}.json`, { value } ).then( ( response ) =>
       {
         res.send( response )

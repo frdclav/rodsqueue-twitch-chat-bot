@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ListItem, ListItemText, Button, ButtonGroup, Grid, Paper } from "@material-ui/core";
 import API from "../../Utils/API"
-import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 
 const QueueItem = ( props ) =>
 {

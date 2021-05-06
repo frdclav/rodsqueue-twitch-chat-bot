@@ -19,7 +19,7 @@ const LinkCheck = ( props ) =>
 
 		API.checkIfUserLinkedToStore( userVal ).then( response =>
 		{
-			console.log( 'checkuserlink', userVal, response )
+			// console.log( 'checkuserlink', userVal, response )
 			setCurShop( response.data )
 		} ).catch( err => console.log( 'err checkuserlink', err ) )
 

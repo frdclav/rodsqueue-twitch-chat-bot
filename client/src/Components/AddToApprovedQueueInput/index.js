@@ -4,35 +4,38 @@ import { QueueContext } from '../../Context/WaitingQueueContext';
 import { AddToQueueInputContext } from '../../Context/AddToQueueInputContext';
 
 
-const AddToQueueInput = (props) => {
-	const { curApprovedQueueState, setCurApprovedQueueState } = useContext(QueueContext)
-	const { curAddToQueueInputState, setCurAddToQueueInputState } = useContext(AddToQueueInputContext)
-	const [inputData, setInputData] = useState('');
+const AddToQueueInput = ( props ) =>
+{
+	const { curApprovedQueueState, setCurApprovedQueueState } = useContext( QueueContext )
+	const { curAddToQueueInputState, setCurAddToQueueInputState } = useContext( AddToQueueInputContext )
+	const [ inputData, setInputData ] = useState( '' );
 
 	// const [curQueueState, setCurQueueState] = useState(curQueue.curQueueArr)
 
 
-	const handleAddToQueue = async (event) => {
+	const handleAddToQueue = async ( event ) =>
+	{
 		event.preventDefault();
 		// const { name, value } = event.target;
 
-		console.log('HANDLE ADD TO QUEUE ', inputData)
+		// console.log('HANDLE ADD TO QUEUE ', inputData)
 		let newQueue = curApprovedQueueState.curQueueArr
-		newQueue.push(inputData)
+		newQueue.push( inputData )
 
 
 
 		// setCurQueue(newQueue)
-		setCurApprovedQueueState({ curQueueArr: newQueue })
-		setInputData('')
+		setCurApprovedQueueState( { curQueueArr: newQueue } )
+		setInputData( '' )
 	};
 
-	const handleInputChange =  (event) => {
+	const handleInputChange = ( event ) =>
+	{
 		const { name, value } = event.target;
-		console.log(name, value)
-		 setCurAddToQueueInputState(value);
+		// console.log(name, value)
+		setCurAddToQueueInputState( value );
 
-		setInputData(value);
+		setInputData( value );
 	}
 
 	return (

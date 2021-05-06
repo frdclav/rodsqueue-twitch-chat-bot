@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Button, ButtonGroup, Input, FormLabel, FormGroup } from "@material-ui/core";
-import { ClearQueueButton } from "../ClearQueueButton";
-import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 const AddToQueueInputForm = ( props ) =>
 {
   const [ inputData, setInputData ] = useState( '' )
-  const [ curQueue, setCurQueue ] = useState( props.curQueue )
+  // const [ curQueue, setCurQueue ] = useState( props.curQueue )
   const [ handleSubmit, setHandleSubmit ] = useState( ( e ) => { } )
   const ID = function ()
   {
@@ -14,36 +12,38 @@ const AddToQueueInputForm = ( props ) =>
     // after the decimal.
     return "_" + Math.random().toString( 36 ).substr( 2, 9 );
   };
+  const curQueue = props.curQueue
+  const onSubmit = props.onSubmit
 
   useEffect( () =>
   {
-    console.log( 'curQueue', props.curQueue )
-    setCurQueue( props.curQueue )
+    // console.log( 'curQueue', props.curQueue )
+    // setCurQueue( props.curQueue )
     let newSubmit = ( e ) =>
     {
       e.preventDefault()
       // console.log( 'curQueue', props.curQueue.curQueueArr )
-      console.log( 'inputData', inputData )
-      if ( props.curQueue.curQueueArr )
+      // console.log( 'inputData', inputData )
+      if ( curQueue.curQueueArr )
       {
-        let newQueue = props.curQueue.curQueueArr
+        let newQueue = curQueue.curQueueArr
         newQueue.push( { id: ID(), message: inputData } )
-        console.log( 'handleSubmit', newQueue )
+        // console.log( 'handleSubmit', newQueue )
 
-        props.onSubmit( newQueue )
+        onSubmit( newQueue )
 
       } else
       {
         let newQueue = [ inputData ]
-        console.log( 'empty arr so add handleSubmit', newQueue )
-        props.onSubmit( newQueue )
+        // console.log( 'empty arr so add handleSubmit', newQueue )
+        onSubmit( newQueue )
 
       }
 
       setInputData( "" )
     }
     setHandleSubmit( e => newSubmit )
-  }, [ props.curQueue, inputData ] )
+  }, [ curQueue, onSubmit, inputData ] )
 
   // useEffect( () =>
   // {
