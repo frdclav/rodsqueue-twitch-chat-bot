@@ -8,6 +8,7 @@ import
 import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 import { AddToQueueInputContext } from "../../Context/AddToQueueInputContext";
 import { Link } from "react-router-dom";
+import { SetStoreForm } from '../SetStoreForm';
 
 const AuthedNotLinked = ( props ) =>
 {
@@ -46,11 +47,9 @@ const AuthedNotLinked = ( props ) =>
 							>
 								<Grid container direction="column" justify="center" alignItems="center" >
 									<Grid item> <p> you are not linked to a store</p></Grid>
+									<Grid item> <SetStoreForm user={props.user}></SetStoreForm></Grid>
 									<Grid item>
 										<Button color="primary" onClick={() => { firebase.auth().signOut() }}>SIGN OUT!</Button>
-									</Grid>
-									<Grid item>
-										<Link to="/public">PUBLIC VIEW</Link>
 									</Grid>
 								</Grid>
 

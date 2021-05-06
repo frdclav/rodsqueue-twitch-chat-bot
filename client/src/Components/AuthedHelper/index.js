@@ -48,7 +48,7 @@ const AuthedHelper = ( props ) =>
 					</Grid>
 				</Grid>
 				<Grid item xs={8}>
-					<Queue dbValue={curQueue} />
+					<Queue dbValue={curQueue} curShop={curShop} />
 				</Grid>
 
 

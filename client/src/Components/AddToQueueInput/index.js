@@ -26,13 +26,13 @@ const AddToQueueInput = ( props ) =>
   {
     console.log( 'newValue', newValue );
     console.log( 'props', theDbValue );
-    API.addToQueueAPI( newValue )
+    API.addToQueueAPI( { storename: props.curShop, value: newValue } )
   }
   const handleClearQueue = () =>
   {
 
     console.log( 'clearqueue!', props.curShop )
-    API.clearQueue( props.curShop )
+    API.clearQueue( { storename: props.curShop, value: [] } )
   }
   return (
     <center>

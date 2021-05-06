@@ -24,7 +24,7 @@ const AddToQueueInputForm = ( props ) =>
       e.preventDefault()
       // console.log( 'curQueue', props.curQueue.curQueueArr )
       console.log( 'inputData', inputData )
-      if ( props.curQueue.length !== 0 )
+      if ( props.curQueue.curQueueArr )
       {
         let newQueue = props.curQueue.curQueueArr
         newQueue.push( { id: ID(), message: inputData } )
