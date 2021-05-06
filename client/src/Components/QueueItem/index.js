@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ListItem, ListItemText, Button, ButtonGroup, Grid, Paper } from "@material-ui/core";
+import { ListItem, ListItemText, Button, ButtonGroup, Grid, Box } from "@material-ui/core";
 import API from "../../Utils/API"
 
 const QueueItem = ( props ) =>
@@ -121,7 +121,7 @@ const QueueItem = ( props ) =>
   // console.log( 'queue item props', props )
   return (
     <Grid style={{ padding: '4px' }} item>
-      <Paper style={{ background: 'rgba( 255, 255, 255, 0.8 )' }} variant="elevation" >
+      <Box style={{ background: 'rgba( 255, 255, 255, 0.8 )' }} >
         <ListItem
           // id={listItemId}
           onMouseEnter={handleSlideOpen}
@@ -155,7 +155,7 @@ const QueueItem = ( props ) =>
           </Grid>
 
         </ListItem>
-      </Paper>
+      </Box>
     </Grid>
   );
 };
