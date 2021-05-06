@@ -49,7 +49,7 @@ const QueueItem = ( props ) =>
       // console.log( "handleRemove", newArr );
 
       // API.removeFromQueueAPI( element.key )
-      API.addToQueueAPI( newArr )
+      API.addToQueueAPI( { storename: props.curShop, value: newArr } )
 
     };
   };
@@ -71,7 +71,7 @@ const QueueItem = ( props ) =>
       {
         moveInArray( newArr, curIndex, curIndex - 1 )
         // console.log( 'ok making move up', newArr )
-        API.addToQueueAPI( newArr )
+        API.addToQueueAPI( { storename: props.curShop, value: newArr } )
 
       }
     };
@@ -92,7 +92,7 @@ const QueueItem = ( props ) =>
       {
         moveInArray( newArr, curIndex, curIndex + 1 )
         // console.log( 'ok making move down', newArr )
-        API.addToQueueAPI( newArr )
+        API.addToQueueAPI( { storename: props.curShop, value: newArr } )
 
       }
     };

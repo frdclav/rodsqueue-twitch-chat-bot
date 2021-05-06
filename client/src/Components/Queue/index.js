@@ -11,7 +11,7 @@ const ID = function ()
 };
 const Queue = ( props ) =>
 {
-  const theDbValue = props.dbValue ? props.dbValue.curQueueArr : null;
+  const theDbValue = props.dbValue.curQueueArr ? props.dbValue.curQueueArr : null;
   // useEffect( () =>
   // {
   //   console.log( "Queue props updating", props )
@@ -37,7 +37,7 @@ const Queue = ( props ) =>
             //   <ListItem ><p>{`${el}`}</p></ListItem>
             // )
             return (
-              <QueueItem id={itemKey} element={el} isPublic={props.isPublic} key={itemKey} curQueue={props.dbValue} />
+              <QueueItem id={itemKey} element={el} isPublic={props.isPublic} key={itemKey} curQueue={props.dbValue} curShop={props.curShop} />
             )
 
           } )}
