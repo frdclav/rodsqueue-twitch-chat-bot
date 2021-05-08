@@ -22,6 +22,8 @@ import
 import { FirebaseAuthConsumer, FirebaseAuthProvider } from "@react-firebase/auth"
 import { SiteHeader } from "./Components/SiteHeader"
 import { LinkCheck } from "./Components/LinkCheck";
+
+
 const App = ( props ) =>
 {
   const [ curWaitingQueueState, setCurWaitingQueueState ] = useState( {
@@ -52,6 +54,7 @@ const App = ( props ) =>
       <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 
         <FirebaseAuthConsumer>
+
           {( { isSignedIn, user, providerId } ) =>
           {
             if ( !isSignedIn )
@@ -93,7 +96,6 @@ const App = ( props ) =>
 
             }
           }}
-
         </FirebaseAuthConsumer>
 
 
@@ -134,12 +136,10 @@ const App = ( props ) =>
     <Router>
       <Switch>
         <Route exact path="/">
-          <SiteHeader />
 
           <Main />
         </Route>
         <Route path="/main">
-          <SiteHeader />
 
           <Main />
         </Route>

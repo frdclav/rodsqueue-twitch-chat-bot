@@ -8,6 +8,7 @@ import { Queue } from "../Queue";
 import { QueueSwitch } from '../QueueSwitch';
 import { QueueStatus } from '../QueueStatus';
 import { QueueActions } from '../QueueActions';
+import { SiteHeader } from '../SiteHeader';
 
 
 const AuthedHelper = ( props ) =>
@@ -19,12 +20,13 @@ const AuthedHelper = ( props ) =>
 
 	useEffect( () =>
 	{
-		// console.log( 'curQueue', curQueue )
+		// console.log( 'curShop', curShop )
 		setCurQueue( props.curQueue )
 	}, [ props.curQueue ] )
 	return (
 
 		<WaitingQueueContext.Provider value={{ curQueue, setCurQueue }}>
+
 			<Grid container direction="row-reverse" justify="center" alignItems="center">
 				<Grid item style={{ padding: '10px' }}><Card>
 					<CardHeader title={

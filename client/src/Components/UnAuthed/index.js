@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input, FormGroup, FormLabel, ButtonGroup, Grid } from '@material-ui/core';
+import { Button, Input, FormGroup, FormLabel, ButtonGroup, Grid, Typography, Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
 import API from '../../Utils/API';
 
 
@@ -68,35 +68,33 @@ const UnAuthed = ( props ) =>
 			} );;
 	}
 	return (
+		<center style={{ padding: '20px' }}>
+			<Card style={{ display: 'inline-block', padding: '20px' }}>
+				<CardHeader title={'r o d s q u e u e'} subheader={`login || new account`}></CardHeader>
+
+				<CardContent>
 
 
+					<FormGroup >
+						<FormLabel style={{ padding: '20px' }}>email</FormLabel>
+						<Input type='text' onChange={( e ) => { setEmailInput( e.target.value ) }} ></Input>
+						<FormLabel style={{ padding: '20px' }}>password</FormLabel>
+						<Input type='password' onChange={( e ) => { setPasswordInput( e.target.value ) }} ></Input>
 
-		< Grid style={{ padding: '36px' }} container alignItems="center" direction="column" >
+					</FormGroup >
 
-			<Grid item><h2>You're not signed in </h2></Grid>
-			<Grid item>
-				<FormGroup style={{ padding: '36px' }} >
-					<h3> Sign In or Create an Account:</h3>
-					<FormLabel>email</FormLabel>
-					<Input type='text' onChange={( e ) => { setEmailInput( e.target.value ) }} ></Input>
-					<FormLabel>password</FormLabel>
-					<Input type='password' onChange={( e ) => { setPasswordInput( e.target.value ) }} ></Input>
-					<ButtonGroup
-						style={{ padding: '36px' }}
-						fullWidth={false}
-						color="primary"
-						size="small"
-						aria-label="text primary button group"
-					><Button color='primary' onClick={handleLoginUser} >Log In</Button>
-						<Button color='primary' onClick={handleCreateAccount} >Create Account</Button>
-						<Button
-							onClick={handleGoogleLogin}
-						>
-							Sign in with Google
-        </Button></ButtonGroup></FormGroup ></Grid>
-		</Grid >
-
-
+				</CardContent>
+				<CardActions>
+					<Button onClick={handleLoginUser} >Log In</Button>
+					<Button onClick={handleCreateAccount} >Create Account</Button>
+					<Button
+						onClick={handleGoogleLogin}
+					>
+						Sign in with Google
+						 </Button>
+				</CardActions>
+			</Card>
+		</center>
 	)
 
 };

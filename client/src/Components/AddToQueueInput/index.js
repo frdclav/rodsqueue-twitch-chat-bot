@@ -35,7 +35,6 @@ const AddToQueueInput = ( props ) =>
   return (
     <center>
       <AddToQueueInputForm curQueue={props.curQueue} handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} ></AddToQueueInputForm>
-      <ClearQueueButton handleClearQueue={handleClearQueue} curShop={props.curShop}></ClearQueueButton>
     </center>
 
 

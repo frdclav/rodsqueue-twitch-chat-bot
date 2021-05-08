@@ -4,7 +4,6 @@
   "private": true,
   "proxy": "http://localhost:3002",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
     "@react-firebase/auth": "^0.2.10",
     "@react-firebase/database": "^0.3.11",
     "@testing-library/jest-dom": "^5.11.4",
