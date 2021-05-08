@@ -38,6 +38,10 @@ const SiteHeader = ( props ) =>
 		console.log( 'siteHeader', curShop )
 		setCurShop( props.curShop )
 	}, [ props.curShop ] )
+	const nextPath = ( path ) =>
+	{
+		props.history.push( path );
+	}
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.root}>
@@ -46,7 +50,7 @@ const SiteHeader = ( props ) =>
 						<Typography className={classes.title} edge="start" variant="h6" >
 							r o d s q u e u e
 				</Typography>
-						{curShop && <Button color="inherit" onClick={() => this.nextPath( `public/${curShop}` )} >PUBLIC VIEW</Button>}
+						{curShop && <Button color="inherit" component={Link} to={`public/${curShop}`}  >PUBLIC VIEW</Button>}
 
 
 						<Button color="inherit" onClick={() => { firebase.auth().signOut() }}>Log Out</Button>
