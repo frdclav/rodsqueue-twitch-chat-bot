@@ -27,8 +27,8 @@ const AuthedHelper = ( props ) =>
 
 		<WaitingQueueContext.Provider value={{ curQueue, setCurQueue }}>
 
-			<Grid container direction="row-reverse" justify="center" alignItems="center">
-				<Grid item style={{ padding: '10px' }}><Card>
+			<Grid container direction="column-reverse" justify="center" alignItems="center">
+				<Grid item xs={9} style={{ padding: '10px' }}><Card>
 					<CardHeader title={
 						<Typography variant="h5" component="h5" gutterBottom>{`${curShop}`}
 						</Typography>
