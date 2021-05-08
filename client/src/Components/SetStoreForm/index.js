@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Button, ButtonGroup, Input, FormLabel, FormGroup } from "@material-ui/core";
+import { Grid, Button, ButtonGroup, Input, FormLabel, FormGroup, CardContent, CardActions } from "@material-ui/core";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import API from '../../Utils/API'
+
 
 
 const MySwal = withReactContent( Swal )
@@ -89,24 +90,7 @@ const SetStoreForm = ( props ) =>
         } )
       }
 
-      // e.preventDefault()
-      // // console.log( 'curQueue', props.curQueue.curQueueArr )
-      // console.log( 'inputData', inputData )
-      // if ( props.curQueue.length !== 0 )
-      // {
-      //   let newQueue = props.curQueue.curQueueArr
-      //   newQueue.push( { id: ID(), message: inputData } )
-      //   console.log( 'handleSubmit', newQueue )
 
-      //   props.onSubmit( newQueue )
-
-      // } else
-      // {
-      //   let newQueue = [ inputData ]
-      //   console.log( 'empty arr so add handleSubmit', newQueue )
-      //   props.onSubmit( newQueue )
-
-      // }
 
       setNameInputData( "" )
       setPwInputData( "" )
@@ -179,13 +163,11 @@ const SetStoreForm = ( props ) =>
 
   }, [ nameInputData, pwInputData, props.user ] )
 
-
-
+  // const classes = useStyles()
+  const theme = props.theme
   return (
-
-    <center>
-
-      <FormGroup  >
+    <center >
+      <CardContent > <FormGroup  >
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item>
             <FormLabel>store name:</FormLabel></Grid><Grid item>
@@ -194,28 +176,22 @@ const SetStoreForm = ( props ) =>
             <FormLabel>store password:</FormLabel></Grid><Grid item>
             <Input type='password' value={pwInputData} onChange={( e ) => setPwInputData( e.target.value )}></Input>
           </Grid>
-          <Grid container item>
-            <ButtonGroup
-              style={{ padding: '6px' }}
-              fullWidth={false}
-              color="primary"
-              size="small"
-              aria-label="text primary button group" justify="center"
-            ><Button
-              style={{ padding: '6px' }}
-
-              color='primary' onClick={( e ) => { handleCreate( e ) }}>Create a new Store</Button>
-              <Button
-                style={{ padding: '6px' }}
-
-                color='primary' onClick={( e ) => { handleSubmit( e ) }}>Link to an existing Store</Button>
-            </ButtonGroup>
-
-          </Grid>
         </Grid>
-
       </FormGroup >
-    </center>
+      </CardContent>
+
+      <CardActions><Button
+        style={{ padding: '6px' }}
+
+        onClick={( e ) => { handleCreate( e ) }}>Create a new Store</Button>
+        <Button
+          style={{ padding: '6px' }}
+
+          onClick={( e ) => { handleSubmit( e ) }}>Link to an existing Store</Button></CardActions>
+
+
+
+    </center >
   )
 
 };

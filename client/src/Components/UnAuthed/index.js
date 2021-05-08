@@ -68,7 +68,7 @@ const UnAuthed = ( props ) =>
 			} );;
 	}
 	return (
-		<center style={{ padding: '20px' }}>
+		<center style={{ backgroundColor: "#9e9e9e", padding: '20px', height: '100%' }}>
 			<Card style={{ display: 'inline-block', padding: '20px' }}>
 				<CardHeader title={'r o d s q u e u e'} subheader={`login || new account`}></CardHeader>
 

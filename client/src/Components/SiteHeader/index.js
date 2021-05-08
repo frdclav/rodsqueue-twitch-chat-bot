@@ -17,7 +17,7 @@ const theme = createMuiTheme( {
 
 const useStyles = makeStyles( ( theme ) => ( {
 	root: {
-		flexGrow: 1,
+		flexGrow: 1, backgroundColor: '#424242'
 	},
 	menuButton: {
 		marginRight: theme.spacing( 2 ),
@@ -44,9 +44,10 @@ const SiteHeader = ( props ) =>
 				<AppBar position="static">
 					<Toolbar>
 						<Typography className={classes.title} edge="start" variant="h6" >
-							rodsqueue
+							r o d s q u e u e
 				</Typography>
-						<Button color="inherit" ><Link to={`public/${curShop}`}>{`PUBLIC VIEW`}</Link></Button>
+						{curShop && <Button color="inherit" onClick={() => this.nextPath( `public/${curShop}` )} >PUBLIC VIEW</Button>}
+
 
 						<Button color="inherit" onClick={() => { firebase.auth().signOut() }}>Log Out</Button>
 

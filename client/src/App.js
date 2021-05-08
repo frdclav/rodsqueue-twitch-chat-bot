@@ -20,7 +20,6 @@ import
   useParams
 } from "react-router-dom";
 import { FirebaseAuthConsumer, FirebaseAuthProvider } from "@react-firebase/auth"
-import { SiteHeader } from "./Components/SiteHeader"
 import { LinkCheck } from "./Components/LinkCheck";
 
 
@@ -43,9 +42,6 @@ const App = ( props ) =>
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
-  // console.log( 'firebaseConfig', firebaseConfig )
-
-  // const curShop = 'seanthenkyle'
 
 
   const Main = () =>
@@ -68,29 +64,7 @@ const App = ( props ) =>
               // console.log( 'authed' )
               return <LinkCheck user={user} firebase={firebase} firebaseConfig={firebaseConfig}></LinkCheck>
 
-              // const curShop = 'seanthenkyle'
-              // return <Authed firebase={firebase} firebaseConfig={firebaseConfig} curShop={curShop}> </Authed>
 
-
-              // API.checkIfUserLinkedToStore( user ).then( response =>
-              // {
-              //   console.log( response.data )
-              //   const curShop = response.data
-
-              //   if ( curShop )
-              //   {
-              //     console.log( 'linked', curShop )
-              //     return ( <Authed firebase={firebase} firebaseConfig={firebaseConfig} curShop={curShop}> </Authed> )
-              //   } else
-              //   {
-              //     console.log( 'not linked', curShop )
-
-              //     // return <AuthedNotLinked></AuthedNotLinked>
-              //     return () => { <p>notlinked</p> }
-              //   }
-
-
-              // } )
 
 
 

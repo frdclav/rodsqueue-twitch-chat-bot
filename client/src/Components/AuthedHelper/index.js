@@ -53,12 +53,6 @@ const AuthedHelper = ( props ) =>
 
 									</Grid>
 
-									<Grid item>
-										<Button color="primary" onClick={() => { firebase.auth().signOut() }}>SIGN OUT!</Button>
-									</Grid>
-									<Grid item>
-										<Link to={`public/${curShop}`}>PUBLIC VIEW</Link>
-									</Grid>
 								</Grid>
 
 
