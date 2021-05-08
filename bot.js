@@ -159,7 +159,10 @@ function onMessageHandler ( target, context, msg, self )
   // leaving in the dice command
   else if ( commandName[ 0 ] === "!dice" )
   {
-    const num = rollDice();
+    const sides = isNaN( commandName[ 1 ] ) ? 6 : commandName[ 1 ]
+    console.log( sides )
+    const num = rollDice( sides );
+    console.log( num )
     client.say( target, `${sender}, you rolled a ${num}` );
     console.log( `* Executed ${commandName} command` );
   } else
@@ -168,9 +171,10 @@ function onMessageHandler ( target, context, msg, self )
   }
 }
 // Function called when the "dice" command is issued
-function rollDice ()
+function rollDice ( sides )
 {
-  const sides = 6;
+  // const sides = 6;
+  console.log( 'rolling d', sides )
   return Math.floor( Math.random() * sides ) + 1;
 }
 

@@ -5,6 +5,7 @@ import
 	FirebaseDatabaseProvider,
 } from "@react-firebase/database";
 import { AuthedHelper } from '../AuthedHelper';
+import { SiteHeader } from '../SiteHeader'
 
 const Authed = ( props ) =>
 {
@@ -24,14 +25,17 @@ const Authed = ( props ) =>
 
 		<FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
 			<FirebaseDatabaseNode path={`/${curShop}`}>
+
 				{( d ) =>
 				{
 					// setCurQueue( d.value )
 					// console.log( 'd', d.value )
 					return (
+						<React.Fragment>
+							<SiteHeader {...props}></SiteHeader>
 
-						<AuthedHelper {...props} curQueue={d.value ? d.value : []}></AuthedHelper>
-
+							<AuthedHelper {...props} curQueue={d.value ? d.value : []}></AuthedHelper>
+						</React.Fragment>
 					);
 				}
 				}

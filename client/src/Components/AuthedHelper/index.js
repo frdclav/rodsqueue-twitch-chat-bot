@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
 
 import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 import { AddToQueueInput } from "../AddToQueueInput";
 import { Link } from "react-router-dom";
 import { Queue } from "../Queue";
+import { QueueSwitch } from '../QueueSwitch';
+import { QueueStatus } from '../QueueStatus';
+import { QueueActions } from '../QueueActions';
+import { SiteHeader } from '../SiteHeader';
+
 
 const AuthedHelper = ( props ) =>
 {
@@ -15,39 +20,57 @@ const AuthedHelper = ( props ) =>
 
 	useEffect( () =>
 	{
-		// console.log( 'curQueue', curQueue )
+		// console.log( 'curShop', curShop )
 		setCurQueue( props.curQueue )
 	}, [ props.curQueue ] )
 	return (
 
 		<WaitingQueueContext.Provider value={{ curQueue, setCurQueue }}>
 
+			<Grid container direction="column-reverse" justify="center" alignItems="center">
+				<Grid item xs={9} style={{ padding: '10px' }}><Card>
+					<CardHeader title={
+						<Typography variant="h5" component="h5" gutterBottom>{`${curShop}`}
+						</Typography>
 
-			<Grid container direction="row" justify="space-around" alignItems="center" >
-				<Grid container item direction="column" xs={3}>
-					<Grid item>
-						<Typography variant="h3" component="h2" gutterBottom>store: {`${curShop}`} </Typography>
-					</Grid>
+					} action={
+						<QueueActions curShop={curShop}></QueueActions>
+					} subheader={
+						<QueueStatus curShop={curShop}></QueueStatus>
+					}>
+					</CardHeader>
+					<CardContent>
+						<Queue dbValue={curQueue} curShop={curShop} />
+					</CardContent></Card></Grid>
+				<Grid item>
+					<Card>
+						<CardContent>
+							<Grid container justify="space-around" alignItems="center" >
+								<Grid container item direction="column" xs={3}>
 
-					<Grid item>
-						<AddToQueueInput curShop={props.curShop} curQueue={curQueue} />
+									<Grid item>
+										<AddToQueueInput curShop={props.curShop} curQueue={curQueue} />
 
-					</Grid>
+									</Grid>
 
-					<Grid item>
-						<Button color="primary" onClick={() => { firebase.auth().signOut() }}>SIGN OUT!</Button>
-					</Grid>
-					<Grid item>
-						<Link to={`public/${curShop}`}>PUBLIC VIEW</Link>
-					</Grid>
+								</Grid>
+
+
+
+
+							</Grid>
+
+						</CardContent>
+					</Card>
+
+
+
 				</Grid>
-				<Grid item xs={8}>
-					<Queue dbValue={curQueue} curShop={curShop} />
-				</Grid>
-
-
-
 			</Grid>
+
+
+
+
 		</WaitingQueueContext.Provider>
 
 	);

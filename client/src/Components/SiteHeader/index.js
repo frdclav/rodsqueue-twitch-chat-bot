@@ -1,15 +1,61 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Typography, Card, Button, CardContent, AppBar, Toolbar } from '@material-ui/core';
+import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
+const theme = createMuiTheme( {
+	palette: {
+		primary: {
+			main: '#9e9e9e'
+		},
+		secondary: {
+			main: '#bdbdbd'
+		},
+	},
+} );
 
+
+
+const useStyles = makeStyles( ( theme ) => ( {
+	root: {
+		flexGrow: 1, backgroundColor: '#424242'
+	},
+	menuButton: {
+		marginRight: theme.spacing( 2 ),
+	},
+	title: {
+		flexGrow: 1,
+	},
+} ) );
 
 const SiteHeader = ( props ) =>
 {
-
+	const classes = useStyles();
+	const firebase = props.firebase
+	// const curShop = props.curShop
+	const [ curShop, setCurShop ] = useState( props.curShop )
+	useEffect( () =>
+	{
+		console.log( 'siteHeader', curShop )
+		setCurShop( props.curShop )
+	}, [ props.curShop ] )
 	return (
-		<center>
-			<Typography variant="h1" component="h2" gutterBottom>
-				rodsqueue
-		</Typography></center>
+		<ThemeProvider theme={theme}>
+			<div className={classes.root}>
+				<AppBar position="static">
+					<Toolbar>
+						<Typography className={classes.title} edge="start" variant="h6" >
+							r o d s q u e u e
+				</Typography>
+						{curShop && <Button color="inherit" onClick={() => this.nextPath( `public/${curShop}` )} >PUBLIC VIEW</Button>}
+
+
+						<Button color="inherit" onClick={() => { firebase.auth().signOut() }}>Log Out</Button>
+
+					</Toolbar>
+
+				</AppBar>
+			</div>
+		</ThemeProvider >
 	);
 };
 

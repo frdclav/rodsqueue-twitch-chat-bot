@@ -3,7 +3,7 @@ import React from "react";
 import { AddToQueueInputForm } from "../AddToQueueInputForm"
 import { ClearQueueButton } from "../ClearQueueButton"
 import API from "../../Utils/API"
-import { QueueSwitch } from "../QueueSwitch";
+// import { QueueSwitch } from "../QueueSwitch";
 
 const AddToQueueInput = ( props ) =>
 {
@@ -35,8 +35,6 @@ const AddToQueueInput = ( props ) =>
   return (
     <center>
       <AddToQueueInputForm curQueue={props.curQueue} handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} ></AddToQueueInputForm>
-      <ClearQueueButton handleClearQueue={handleClearQueue} curShop={props.curShop}></ClearQueueButton>
-      <QueueSwitch curShop={props.curShop} curQueueStatus={props.curQueue.queuestatus}></QueueSwitch>
     </center>
 
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import API from "../../Utils/API";
 import { Authed } from "../Authed";
 import { AuthedNotLinked } from "../AuthedNotLinked";
+import { SiteHeader } from '../SiteHeader';
 const LinkCheck = ( props ) =>
 {
 	const firebase = props.firebase
@@ -28,10 +29,17 @@ const LinkCheck = ( props ) =>
 
 	}
 	linkCheckHelper( props.user )
-	return ( <div>
-		{ curShop ? <Authed firebase={firebase} firebaseConfig={firebaseConfig} curShop={curShop}> </Authed> : <AuthedNotLinked user={user} firebase={firebase} firebaseConfig={firebaseConfig}></AuthedNotLinked>
+	return ( <React.Fragment>
+		{ curShop ? <React.Fragment>
+
+			<Authed firebase={firebase} firebaseConfig={firebaseConfig} curShop={curShop}>
+			</Authed>
+		</React.Fragment>
+			:
+
+			<AuthedNotLinked user={user} firebase={firebase} firebaseConfig={firebaseConfig}></AuthedNotLinked>
 		}
-	</div>
+	</React.Fragment>
 
 	)
 

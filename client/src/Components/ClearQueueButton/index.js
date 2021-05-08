@@ -50,28 +50,8 @@ const ClearQueueButton = ( props ) =>
         // setInputData( "" )
     }
     return (
-        <center>
 
-            <FormGroup  >
-                <Grid container direction="column" justify="center" alignItems="center">
-
-                    <Grid container item>
-                        <ButtonGroup
-                            style={{ padding: '6px' }}
-                            fullWidth={false}
-                            color="primary"
-                            size="small"
-                            aria-label="text primary button group" justify="center"
-                        >
-                            <Button color='primary' onClick={showSwal}>Clear Queue</Button>
-                        </ButtonGroup>
-
-                    </Grid>
-
-                </Grid >
-            </FormGroup >
-
-        </center >
+        <p onClick={showSwal}>Clear Queue</p>
     )
 
 };
