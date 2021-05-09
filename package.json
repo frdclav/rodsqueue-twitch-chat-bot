@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "concurrently \"node app.js\"  \"node bot.js\"",
-    "start:dev": "concurrently \"node app.js\" \"yarn run client\" \"node bot.js\"",
+    "start:prod": "node app.js",
+    "start:dev": "concurrently \"node app.js\" \"yarn run client\"",
     "client": "cd client && yarn run start",
     "build": "cd client && yarn run build",
     "heroku-postbuild": "npm run build"
