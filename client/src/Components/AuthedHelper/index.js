@@ -19,7 +19,7 @@ const AuthedHelper = ( props ) =>
 
 	const [ curQueue, setCurQueue ] = useState( props.curQueue )
 	const curShop = props.curShop
-	const [ botLog, setBotLog ] = useState( [] )
+	const [ botLog, setBotLog ] = useState( {} )
 	useEffect( () =>
 	{
 		// console.log( 'curShop', curShop )

@@ -13,10 +13,10 @@ const ChatBot = ( props ) =>
     // Define configuration options
     const opts = {
         identity: {
-            username: props.bot_username,
-            password: props.oauth_token,
+            username: process.env.REACT_APP_BOT_USERNAME,
+            password: process.env.REACT_APP_OAUTH_TOKEN,
         },
-        channels: [ props.channel_name ],
+        channels: [ process.env.REACT_APP_CHANNEL_NAME ],
     };
     const ID = function ()
     {
@@ -36,10 +36,10 @@ const ChatBot = ( props ) =>
     // Connect to Twitch:
     const connectToClient = () =>
     {
-        addToBotLog( botState )
+        // addToBotLog( botState )
         if ( botState )
         {
-            addToBotLog( 'Bot is already on' )
+            addToBotLog( 'Bot is already on', botLog )
         }
         else
         {
@@ -48,10 +48,12 @@ const ChatBot = ( props ) =>
                 // Register our event handlers (defined below)
                 client.on( "message", onMessageHandler );
                 client.on( "connected", onConnectedHandler );
+                addToBotLog( `client connect ${data} `, botLog )
+                console.log( 'data', data )
                 setBotState( true )
             } ).catch( ( err ) =>
             {
-                addToBotLog( 'connectToClient err', err )
+                addToBotLog( `connectToClient err, ${err}`, botLog )
             } );;
 
         }
@@ -62,7 +64,7 @@ const ChatBot = ( props ) =>
     // disconnect from Twitch:
     const disconnectToClient = () =>
     {
-        addToBotLog( botState )
+        // addToBotLog( botState )
 
         if ( botState ) 
         {
@@ -73,6 +75,8 @@ const ChatBot = ( props ) =>
             } ).catch( ( err ) =>
             {
                 addToBotLog( 'disconnectToClient err', err )
+                setBotState( false )
+
             } );;
         }
         else 
@@ -84,15 +88,30 @@ const ChatBot = ( props ) =>
     }
 
     const { botLog, setBotLog } = useContext( ChatBotLogContext )
-    const addToBotLog = ( message ) =>
-    {
-        console.log( 'addToBotLog', message, botLog )
-        const newBotLog = botLog
-        newBotLog.push( message )
-        console.log( 'addToBotLog new', message, newBotLog )
 
-        setBotLog( newBotLog )
+    //TODO: I want to output the messages from the chat bot here, but its buggy right now. Need to fix this.
+    const addToBotLog = ( args, curBotLog ) =>
+    {
+        const message = `${args}`
+        console.log( 'addToBotLog', message, curBotLog )
+        if ( !curBotLog.message )
+        {
+            setBotLog( {
+                message: [ message ]
+            } )
+        }
+        else
+        {
+            const newBotLog = curBotLog.message.map( el => el )
+            newBotLog.push( message )
+            console.log( 'addToBotLog new', message, newBotLog )
+
+            setBotLog( {
+                message: newBotLog
+            } )
+        }
     }
+
 
     // Called every time a message comes in
     const onMessageHandler = ( target, context, msg, self ) =>
@@ -115,11 +134,11 @@ const ChatBot = ( props ) =>
         // if order is not found, let the user know we did not find the order
         if ( commandName[ 0 ] === "!queue" )
         {
-            addToBotLog( `msg: ${msg}` );
+            addToBotLog( `msg: ${msg} `, botLog );
             const order_id = commandName[ 1 ];
             axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/queuestatus.json` ).then( ( response ) =>
             {
-                addToBotLog( 'queuestatus', response.data )
+                addToBotLog( [ 'queuestatus', response.data ], botLog )
                 if ( !response.data )
                 {
                     client.say(
@@ -132,7 +151,7 @@ const ChatBot = ( props ) =>
                 else
                 {
 
-                    addToBotLog( `Checking order ${commandName[ 1 ]}` );
+                    addToBotLog( `Checking order ${commandName[ 1 ]}`, botLog );
                     //Check current queue if order already exists
                     const currentQueueUrl = `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json`
                     axios.get( currentQueueUrl ).then(
@@ -149,8 +168,8 @@ const ChatBot = ( props ) =>
                                     `${sender}, Your position in the queue is ${currentQueue.indexOf( found )}.`
                                 ).catch( ( error, response ) =>
                                 {
-                                    addToBotLog( error.response.status );
-                                    addToBotLog( `error on checking currentQueueUrl context: ${JSON.stringify( context )}` );
+                                    addToBotLog( error.response.status, botLog );
+                                    addToBotLog( `error on checking currentQueueUrl context: ${JSON.stringify( context )}`, botLog );
                                     // client.say(
                                     //   target,
                                     //   `${sender}, I can't find this order_id: ${order_id}`
@@ -159,17 +178,17 @@ const ChatBot = ( props ) =>
                             }
                             else 
                             {
-                                const url = `https://${process.env.SHOPIFY_API}:${process.env.SHOPIFY_PASSWORD}@${process.env.SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
+                                const url = `https://${process.env.REACT_APP_SHOPIFY_API}:${process.env.REACT_APP_SHOPIFY_PASSWORD}@${process.env.REACT_APP_SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
 
                                 axios
                                     .get( url )
                                     .then( ( response ) =>
                                     {
-                                        addToBotLog( `status: ${response.status}` );
+                                        addToBotLog( `status: ${response.status}`, botLog );
                                         // console.log(`data: ${JSON.stringify(response.data)}`);
                                         addToBotLog(
                                             `financial_status: ${response.data.orders[ 0 ].financial_status}`
-                                        );
+                                            , botLog );
                                         // console.log(
                                         //   `financial_status: ${response.data.order.financial_status}`
                                         // );
@@ -208,8 +227,8 @@ const ChatBot = ( props ) =>
                                     } )
                                     .catch( ( error, response ) =>
                                     {
-                                        addToBotLog( error.response.status );
-                                        addToBotLog( `context: ${JSON.stringify( context )}` );
+                                        addToBotLog( error.response.status, botLog );
+                                        addToBotLog( `context: ${JSON.stringify( context )}`, botLog );
                                         client.say(
                                             target,
                                             `${sender}, I can't find this order_id: ${order_id}`
@@ -229,7 +248,7 @@ const ChatBot = ( props ) =>
             } ).catch( ( error, response ) =>
             {
                 // console.log( error.response.status );
-                addToBotLog( `context: ${JSON.stringify( error )}` );
+                addToBotLog( `context: ${JSON.stringify( error )}`, botLog );
 
             } );
 
@@ -257,14 +276,14 @@ const ChatBot = ( props ) =>
         else if ( commandName[ 0 ] === "!dice" )
         {
             const sides = isNaN( commandName[ 1 ] ) ? 6 : commandName[ 1 ]
-            addToBotLog( sides )
+            addToBotLog( sides, botLog )
             const num = rollDice( sides );
-            addToBotLog( num )
+            addToBotLog( num, botLog )
             client.say( target, `${sender}, you rolled a ${num}` );
-            addToBotLog( `* Executed ${commandName} command` );
+            addToBotLog( `* Executed ${commandName} command`, botLog );
         } else
         {
-            addToBotLog( `* Unknown command ${commandName}` );
+            addToBotLog( `* Unknown command ${commandName}`, botLog );
         }
 
     }
@@ -279,7 +298,9 @@ const ChatBot = ( props ) =>
     // Called every time the bot connects to Twitch chat
     const onConnectedHandler = ( addr, port ) => 
     {
-        addToBotLog( `* Connected to ${addr}:${port}` );
+        addToBotLog( `* Connected to ${addr}:${port}`, botLog );
+        // console.log( `* Connected to ${addr}:${port}` );
+
     }
     // let renderTheLog = () =>
     // {
@@ -299,9 +320,9 @@ const ChatBot = ( props ) =>
             <CardHeader title={`ChatBot`}></CardHeader>
             <CardActions>
                 {botState ?
-                    <Button onClick={() => { console.log( 'foo' ) }}>Disconnect ChatBot</Button>
+                    <Button onClick={disconnectToClient}>Disconnect ChatBot</Button>
                     :
-                    <Button onClick={() => { addToBotLog( 'bar' ) }} >Connect ChatBot</Button>
+                    <Button onClick={connectToClient} >Connect ChatBot</Button>
 
                 }
 

@@ -12,12 +12,21 @@ const ChatBotLog = ( props ) =>
 
 
 
-    } )
+    }, [ props ] )
 
     return (
         <React.Fragment>
-            { content.botLog.length > 0 && content.botLog.map( element => <p>{`${element}`}</p> )}
-        </React.Fragment>
+            { content.botLog.message ? content.botLog.message.map( ( element ) =>
+            {
+                // console.log( 'el', element )
+
+                return ( < p > {`${element}`
+                }</p> )
+
+            } ) : <p>n/a</p>}
+
+            {/* <p>{`${JSON.stringify( content )}`}</p> */}
+        </React.Fragment >
     )
 }
 
