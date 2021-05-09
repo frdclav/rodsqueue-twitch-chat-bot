@@ -71,62 +71,97 @@ function onMessageHandler ( target, context, msg, self )
       {
 
         console.log( `Checking order ${commandName[ 1 ]}` );
-        const url = `https://${process.env.SHOPIFY_API}:${process.env.SHOPIFY_PASSWORD}@${process.env.SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
-
-        axios
-          .get( url )
-          .then( ( response ) =>
+        //Check current queue if order already exists
+        const currentQueueUrl = `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json`
+        axios.get( currentQueueUrl ).then(
+          ( response ) =>
           {
-            console.log( `status: ${response.status}` );
-            // console.log(`data: ${JSON.stringify(response.data)}`);
-            console.log(
-              `financial_status: ${response.data.orders[ 0 ].financial_status}`
-            );
-            // console.log(
-            //   `financial_status: ${response.data.order.financial_status}`
-            // );
-            const lineItems = response.data.orders[ 0 ].line_items;
-            const listOfItems = lineItems.map(
-              ( el ) => `${el.quantity} x ${el.name}`
-            );
-            client.say(
-              target,
-              // `${sender},I've found order_id: ${order_id}.
-              //  Your items are: ${listOfItems}`
-              `${sender}, I've confirmed your order. Adding you to the queue now!`
-            );
-            const newItem = {
-              id: ID(), order_id: order_id, message: `${sender}: ${listOfItems}`
-            }
-            axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json` ).then( ( res ) =>
+            const currentQueue = response.data
+            const found = currentQueue.find( element => element.order_id && element.order_id === commandName[ 1 ] )
+            if ( found )
             {
-              if ( res.data )
+              client.say(
+                target,
+                // `${sender},I've found order_id: ${order_id}.
+                //  Your items are: ${listOfItems}`
+                `${sender}, Your position in the queue is ${currentQueue.indexOf( found )}.`
+              ).catch( ( error, response ) =>
               {
-                const newArr = res.data
-                newArr.push( newItem )
-                axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: newArr } ).then( ( response ) =>
-                {
-                  // console.log( response )
-                } )
-              } else
-              {
-                axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: [ newItem ] } ).then( ( response ) =>
-                {
-                  // console.log( response )
-                } )
-              }
-            } )
+                console.log( error.response.status );
+                console.log( `error on checking currentQueueUrl context: ${JSON.stringify( context )}` );
+                // client.say(
+                //   target,
+                //   `${sender}, I can't find this order_id: ${order_id}`
+                // );
+              } );
+            }
+            else 
+            {
+              const url = `https://${process.env.SHOPIFY_API}:${process.env.SHOPIFY_PASSWORD}@${process.env.SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
 
-          } )
-          .catch( ( error, response ) =>
-          {
-            console.log( error.response.status );
-            console.log( `context: ${JSON.stringify( context )}` );
-            client.say(
-              target,
-              `${sender}, I can't find this order_id: ${order_id}`
-            );
-          } );
+              axios
+                .get( url )
+                .then( ( response ) =>
+                {
+                  console.log( `status: ${response.status}` );
+                  // console.log(`data: ${JSON.stringify(response.data)}`);
+                  console.log(
+                    `financial_status: ${response.data.orders[ 0 ].financial_status}`
+                  );
+                  // console.log(
+                  //   `financial_status: ${response.data.order.financial_status}`
+                  // );
+                  const lineItems = response.data.orders[ 0 ].line_items;
+                  const listOfItems = lineItems.map(
+                    ( el ) => `${el.quantity} x ${el.name}`
+                  );
+                  client.say(
+                    target,
+                    // `${sender},I've found order_id: ${order_id}.
+                    //  Your items are: ${listOfItems}`
+                    `${sender}, I've confirmed your order. Adding you to the queue now!`
+                  );
+                  const newItem = {
+                    id: ID(), order_id: order_id, message: `${sender}: ${listOfItems}`
+                  }
+                  axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json` ).then( ( res ) =>
+                  {
+                    if ( res.data )
+                    {
+                      const newArr = res.data
+                      newArr.push( newItem )
+                      axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: newArr } ).then( ( response ) =>
+                      {
+                        // console.log( response )
+                      } )
+                    } else
+                    {
+                      axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: [ newItem ] } ).then( ( response ) =>
+                      {
+                        // console.log( response )
+                      } )
+                    }
+                  } )
+
+                } )
+                .catch( ( error, response ) =>
+                {
+                  console.log( error.response.status );
+                  console.log( `context: ${JSON.stringify( context )}` );
+                  client.say(
+                    target,
+                    `${sender}, I can't find this order_id: ${order_id}`
+                  );
+                } );
+            }
+          }
+        )
+
+
+
+
+
+
 
       }
     } ).catch( ( error, response ) =>
