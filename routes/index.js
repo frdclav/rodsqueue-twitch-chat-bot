@@ -9,10 +9,13 @@
 
 const path = require( "path" );
 const router = require( "express" ).Router();
-const apiRoutes = require( "./firebaseAPI.js" );
+const firebaseApi = require( "./firebaseAPI.js" );
+const chatBotApi = require( "./chatBotAPI.js" );
+
 
 // API Routes
-router.use( "/firebaseApi", apiRoutes );
+router.use( "/firebaseApi", firebaseApi );
+router.use( "/chatBotApi", chatBotApi );
 
 // If no API routes are hit, send the React app
 router.use( function ( req, res )

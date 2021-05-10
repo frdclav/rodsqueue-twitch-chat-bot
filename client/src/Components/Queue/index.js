@@ -26,7 +26,7 @@ const Queue = ( props ) =>
   const ifItemsInQueue = () =>
   {
     return (
-      <List style={{ width: '100vw', height: '100vh', overflow: 'none' }}>
+      <List style={{ width: '100%', height: '100%', overflow: 'none' }}>
         <Grid style={{ padding: '10px' }} container direction="column" alightItems="stretch">
           {/* {theDbValue} */}
           {theDbValue.map( ( el ) =>

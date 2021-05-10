@@ -1,7 +1,8 @@
 import React from "react";
 // import { FirebaseDatabaseMutation } from "@react-firebase/database";
 import { AddToQueueInputForm } from "../AddToQueueInputForm"
-import { ClearQueueButton } from "../ClearQueueButton"
+import { Card } from '@material-ui/core'
+// import { ClearQueueButton } from "../ClearQueueButton"
 import API from "../../Utils/API"
 // import { QueueSwitch } from "../QueueSwitch";
 
@@ -33,9 +34,9 @@ const AddToQueueInput = ( props ) =>
     API.clearQueue( { storename: props.curShop, value: [] } )
   }
   return (
-    <center>
+    <Card>
       <AddToQueueInputForm curQueue={props.curQueue} handleClearQueue={handleClearQueue} curShop={props.curShop} onSubmit={handleSubmit} ></AddToQueueInputForm>
-    </center>
+    </Card>
 
 
   )

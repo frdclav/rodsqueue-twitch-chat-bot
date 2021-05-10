@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Card, Button, CardContent, AppBar, Toolbar } from '@material-ui/core';
+import { Typography, Button, AppBar, Toolbar } from '@material-ui/core';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 const theme = createMuiTheme( {
@@ -37,11 +37,11 @@ const SiteHeader = ( props ) =>
 	{
 		console.log( 'siteHeader', curShop )
 		setCurShop( props.curShop )
-	}, [ props.curShop ] )
-	const nextPath = ( path ) =>
-	{
-		props.history.push( path );
-	}
+	}, [ props.curShop, curShop ] )
+	// const nextPath = ( path ) =>
+	// {
+	// 	props.history.push( path );
+	// }
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.root}>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ChatBotLogContext } from '../../Context/ChatBotLogContext';
 
 const ChatBotLog = ( props ) =>
@@ -12,7 +12,7 @@ const ChatBotLog = ( props ) =>
 
 
 
-    }, [ props ] )
+    }, [ props, content.botLog ] )
 
     return (
         <React.Fragment>
