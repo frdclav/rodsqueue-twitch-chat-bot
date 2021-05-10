@@ -129,7 +129,7 @@ const QueueItem = ( props ) =>
         >
           <Grid container alignItems='center' direction='column'>
             <Grid item>
-              <ListItemText primary={props.element.message} secondary={!props.isPublic && `order_id:${props.element.order_id ? props.element.order_id : 'none'}`} primaryTypographyProps={{ display: 'block', variant: 'p' }}>{props.element}</ListItemText>
+              <ListItemText primary={props.element.message} secondary={!props.isPublic && `order_id:${props.element.order_id ? props.element.order_id : 'none'}`} primaryTypographyProps={{ fontColor: '#000000', display: 'block', variant: `${props.isPublic ? 'h3' : 'p'}` }}>{props.element}</ListItemText>
 
             </Grid>
             <Grid item>
