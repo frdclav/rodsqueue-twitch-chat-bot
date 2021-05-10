@@ -89,6 +89,21 @@ const API = {
         return axios.post( `/firebaseAPI/checkifuserlinkedtostore`, value )
 
 
+    },
+
+
+    // CHATBOT commands below:
+    chatBotStatus: () =>
+    {
+        return axios.get( `chatBotAPI/` )
+    },
+    chatBotConnect: () =>
+    {
+        return axios.get( `/chatBotAPI/connect` )
+    },
+    chatBotDisconnect: () =>
+    {
+        return axios.get( `/chatBotAPI/disconnect` )
     }
 }
 export default API

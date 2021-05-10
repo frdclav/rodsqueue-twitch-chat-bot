@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, CardHeader, Card, Grid, CardContent, CardActions } from '@material-ui/core';
+import { CardHeader, Card } from '@material-ui/core';
 import
 {
 	FirebaseDatabaseNode,
@@ -9,7 +9,7 @@ import { WaitingQueueContext } from "../../Context/WaitingQueueContext";
 import { AddToQueueInputContext } from "../../Context/AddToQueueInputContext";
 import { SetStoreForm } from '../SetStoreForm';
 import { SiteHeader } from '../SiteHeader';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme( {
 	palette: {
 		primary: {

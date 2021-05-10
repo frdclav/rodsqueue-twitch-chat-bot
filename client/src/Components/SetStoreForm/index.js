@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Button, ButtonGroup, Input, FormLabel, FormGroup, CardContent, CardActions } from "@material-ui/core";
+import { Grid, Button, Input, FormLabel, FormGroup, CardContent, CardActions } from "@material-ui/core";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import API from '../../Utils/API'
@@ -164,7 +164,7 @@ const SetStoreForm = ( props ) =>
   }, [ nameInputData, pwInputData, props.user ] )
 
   // const classes = useStyles()
-  const theme = props.theme
+  // const theme = props.theme
   return (
     <center >
       <CardContent > <FormGroup  >

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import API from "../../Utils/API";
 import { Authed } from "../Authed";
 import { AuthedNotLinked } from "../AuthedNotLinked";
-import { SiteHeader } from '../SiteHeader';
+// import { SiteHeader } from '../SiteHeader';
 const LinkCheck = ( props ) =>
 {
 	const firebase = props.firebase
