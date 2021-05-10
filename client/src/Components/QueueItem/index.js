@@ -127,12 +127,12 @@ const QueueItem = ( props ) =>
           onMouseEnter={handleSlideOpen}
           onMouseLeave={handleSlideClose}
         >
-          <Grid container alignItems='center' direction='column'>
+          <Grid container direction='column'>
             <Grid item>
               <ListItemText primary={props.element.message} secondary={!props.isPublic && `order_id:${props.element.order_id ? props.element.order_id : 'none'}`} primaryTypographyProps={{ fontColor: '#000000', display: 'block', variant: `${props.isPublic ? 'h3' : 'p'}` }}>{props.element}</ListItemText>
 
             </Grid>
-            <Grid item>
+            <Grid >
               {!props.isPublic && anchorEl && (
                 <React.Fragment>
                   <br />
