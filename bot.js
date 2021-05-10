@@ -4,10 +4,10 @@ require( "dotenv" ).config();
 // Define configuration options
 const opts = {
   identity: {
-    username: process.env.BOT_USERNAME,
-    password: process.env.OAUTH_TOKEN,
+    username: process.env.REACT_APP_BOT_USERNAME,
+    password: process.env.REACT_APP_OAUTH_TOKEN,
   },
-  channels: [ process.env.CHANNEL_NAME ],
+  channels: [ process.env.REACT_APP_CHANNEL_NAME ],
 };
 
 const ID = function ()
@@ -80,11 +80,13 @@ function onMessageHandler ( target, context, msg, self )
             const found = currentQueue.find( element => element.order_id && element.order_id === commandName[ 1 ] )
             if ( found )
             {
+              const queuePos = currentQueue.indexOf( found ) + 1
+              console.log( 'queuePos', queuePos )
               client.say(
                 target,
                 // `${sender},I've found order_id: ${order_id}.
                 //  Your items are: ${listOfItems}`
-                `${sender}, Your position in the queue is ${currentQueue.indexOf( found )}.`
+                `${sender}, Your current position in the queue is ${queuePos}.`
               ).catch( ( error, response ) =>
               {
                 console.log( error.response.status );
@@ -97,7 +99,7 @@ function onMessageHandler ( target, context, msg, self )
             }
             else 
             {
-              const url = `https://${process.env.SHOPIFY_API}:${process.env.SHOPIFY_PASSWORD}@${process.env.SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
+              const url = `https://${process.env.REACT_APP_SHOPIFY_API}:${process.env.REACT_APP_SHOPIFY_PASSWORD}@${process.env.REACT_APP_SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
 
               axios
                 .get( url )

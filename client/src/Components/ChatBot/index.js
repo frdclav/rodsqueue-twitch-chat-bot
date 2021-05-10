@@ -157,8 +157,10 @@ const ChatBot = ( props ) =>
                     axios.get( currentQueueUrl ).then(
                         ( response ) =>
                         {
-                            const currentQueue = response.data
-                            const found = currentQueue.find( element => element.order_id && element.order_id === commandName[ 1 ] )
+                            console.log( 'get currentQueueUrl', response )
+                            const currentQueue = response
+                            console.log( 'check cur queue', currentQueue )
+                            const found = currentQueue.data ? currentQueue.data.find( element => element.order_id && element.order_id === commandName[ 1 ] ) : false
                             if ( found )
                             {
                                 client.say(
@@ -179,7 +181,7 @@ const ChatBot = ( props ) =>
                             else 
                             {
                                 const url = `https://${process.env.REACT_APP_SHOPIFY_API}:${process.env.REACT_APP_SHOPIFY_PASSWORD}@${process.env.REACT_APP_SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
-
+                                console.log( url )
                                 axios
                                     .get( url )
                                     .then( ( response ) =>
@@ -227,7 +229,7 @@ const ChatBot = ( props ) =>
                                     } )
                                     .catch( ( error, response ) =>
                                     {
-                                        addToBotLog( error.response.status, botLog );
+                                        addToBotLog( error, botLog );
                                         addToBotLog( `context: ${JSON.stringify( context )}`, botLog );
                                         client.say(
                                             target,

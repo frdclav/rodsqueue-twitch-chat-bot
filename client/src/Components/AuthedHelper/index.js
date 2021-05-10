@@ -69,10 +69,10 @@ const AuthedHelper = ( props ) =>
 
 
 					</Grid>
-					<Grid item>
+					{/* <Grid item>
 
 						<ChatBot></ChatBot>
-					</Grid>
+					</Grid> */}
 				</Grid>
 
 
