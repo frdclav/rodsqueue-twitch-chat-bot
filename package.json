@@ -5,9 +5,9 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "concurrently \"node app.js\"",
-    "start:dev": "concurrently \"node app.js\" \"yarn run client\"",
-    "client": "cd client && yarn run start",
-    "build": "cd client && yarn run build",
+    "start:dev": "concurrently \"node app.js\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
