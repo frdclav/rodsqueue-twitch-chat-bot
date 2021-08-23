@@ -5,31 +5,34 @@ import { QueueSwitch } from "../QueueSwitch";
 import { ClearQueueButton } from "../ClearQueueButton"
 import API from "../../Utils/API"
 
-const QueueActions = ( props ) =>
-{
-    const [ anchorEl, setAnchorEl ] = useState( null )
-    const handleClick = ( event ) =>
-    {
-        setAnchorEl( event.currentTarget )
+const QueueActions = (props) => {
+    let firebaseIdAuth
+    props.firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(idToken => {
+        console.log(idToken, 'idToken')
+        firebaseIdAuth = idToken
+    }).catch(function (error) {
+        // Handle error
+        console.log('err with firebase auth', error)
+    });
+    const [anchorEl, setAnchorEl] = useState(null)
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget)
     }
-    const handleClose = () =>
-    {
+    const handleClose = () => {
         // console.log( 'menu should close now', anchorEl )
-        setAnchorEl( null )
+        setAnchorEl(null)
         // console.log( anchorEl )
     }
-    const handleClearQueue = () =>
-    {
+    const handleClearQueue = () => {
 
         // console.log( 'clearqueue!', props.curShop )
-        API.clearQueue( { storename: props.curShop, value: [] } )
+        API.clearQueue({ storename: props.curShop, value: [], auth: firebaseIdAuth })
         handleClose()
 
     }
-    useEffect( () =>
-    {
-        console.log( 'cur AnchorEl', anchorEl )
-    }, [ anchorEl ] )
+    useEffect(() => {
+        console.log('cur AnchorEl', anchorEl)
+    }, [anchorEl])
     return (
         <React.Fragment>
             <IconButton aria-label="queue-options" onClick={handleClick}>
@@ -40,11 +43,11 @@ const QueueActions = ( props ) =>
                 id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
-                open={Boolean( anchorEl )}
+                open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
                 <MenuItem >
-                    <QueueSwitch curShop={props.curShop} onClick={handleClose}></QueueSwitch>
+                    <QueueSwitch firebase={props.firebase} curShop={props.curShop} onClick={handleClose}></QueueSwitch>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                     <ClearQueueButton handleClearQueue={handleClearQueue} curShop={props.curShop}></ClearQueueButton>

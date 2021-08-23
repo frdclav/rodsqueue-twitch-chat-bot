@@ -146,9 +146,9 @@ router.get('/queuestatus/:curShop', (req, res, next) => {
 router.post('/setqueuestatus/:curShop', (req, res, next) => {
   const curShop = req.body.curShop
   const statusToSet = req.body.statusToSet
-  // console.log( 'setqueuestatus', curShop, statusToSet )
+  console.log('setqueuestatus', curShop, statusToSet, req.body.auth)
 
-  axios.patch(`${firebaseURL}/${curShop}/.json`, { queuestatus: statusToSet }).then((response) => {
+  axios.patch(`${firebaseURL}/${curShop}/.json?auth=${req.body.auth}`, { queuestatus: statusToSet }).then((response) => {
     res.send(response.data)
   }
   ).catch(function (error) {
