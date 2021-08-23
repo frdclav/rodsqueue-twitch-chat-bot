@@ -4,56 +4,47 @@ import axios from 'axios';
 
 const API = {
 
-    setStore: ( value ) =>
-    {
+    setStore: (value) => {
         // console.log( `set store ${JSON.stringify( value )}` )
-        return axios.post( `/firebaseAPI/setstore`, value )
+        return axios.post(`/firebaseAPI/setstore`, value)
 
-    }, createStore: ( value ) =>
-    {
+    }, createStore: (value) => {
         // console.log( `creating store ${JSON.stringify( value )}` )
-        return axios.post( `/firebaseAPI/createstore`, value )
+        return axios.post(`/firebaseAPI/createstore`, value)
 
     },
-    checkStore: ( value ) =>
-    {
+    checkStore: (value) => {
         // console.log( `checking store ${JSON.stringify( value )}` )
-        return axios.post( `/firebaseAPI/checkstore`, value )
+        return axios.post(`/firebaseAPI/checkstore`, value)
     },
-    checkStorePw: ( value ) =>
-    {
+    checkStorePw: (value) => {
         // console.log( `checking store wit pw ${JSON.stringify( value )}` )
 
     }
     ,
-    queueStatus: ( value ) =>
-    {
+    queueStatus: (value) => {
         // console.log( 'checkingStatus' )
-        return axios.get( `/firebaseAPI/queuestatus/${value}` )
+        return axios.get(`/firebaseAPI/queuestatus/${value}`)
     },
 
-    setQueueStatus: ( value ) =>
-    {
-        // console.log( 'settingStatus', value )
-        return axios.post( `/firebaseAPI/setqueuestatus/${value.curShop}`, value )
+    setQueueStatus: (value) => {
+        // console.log( 'settingStatus', value ) 
+        console.log(value, 'setQueueStatus')
+        return axios.post(`/firebaseAPI/setqueuestatus/${value.curShop}`, value)
     },
 
-    clearQueue: ( value ) =>
-    {
+    clearQueue: (value) => {
         // console.log( 'clearqueu', value )
-        axios.post( `/firebaseAPI/addtoqueueapi`, value ).then( ( response ) =>
-        {
+        axios.post(`/firebaseAPI/addtoqueueapi`, value).then((response) => {
             // console.log( response )
-        } )
+        })
 
     },
-    addToQueueAPI: ( value ) =>
-    {
+    addToQueueAPI: (value) => {
         // console.log( 'addtoqueue', value )
-        axios.post( `/firebaseAPI/addtoqueueapi`, value ).then( ( response ) =>
-        {
+        axios.post(`/firebaseAPI/addtoqueueapi`, value).then((response) => {
             // console.log( response )
-        } )
+        })
 
 
     },
@@ -66,44 +57,36 @@ const API = {
     //     } )
     // }
 
-    checkIfUserExists: ( value ) =>
-    {
+    checkIfUserExists: (value) => {
 
-        axios.post( `/firebaseAPI/checkifuseresists`, value ).then( ( response ) =>
-        {
+        axios.post(`/firebaseAPI/checkifuseresists`, value).then((response) => {
             // console.log( 'response.data', Object.keys( response.data ).length > 0, response )
             return response.data
-        } )
+        })
     },
-    createNewUser: ( value ) =>
-    {
-        axios.post( `/firebaseAPI/createnewuser`, value ).then( ( response ) =>
-        {
-            return console.log( 'createnewuser', response )
+    createNewUser: (value) => {
+        axios.post(`/firebaseAPI/createnewuser`, value).then((response) => {
+            return console.log('createnewuser', response)
 
-        } )
+        })
     },
-    checkIfUserLinkedToStore: ( value ) =>
-    {
+    checkIfUserLinkedToStore: (value) => {
         // console.log( 'checking', value )
-        return axios.post( `/firebaseAPI/checkifuserlinkedtostore`, value )
+        return axios.post(`/firebaseAPI/checkifuserlinkedtostore`, value)
 
 
     },
 
 
     // CHATBOT commands below:
-    chatBotStatus: () =>
-    {
-        return axios.get( `chatBotAPI/` )
+    chatBotStatus: () => {
+        return axios.get(`chatBotAPI/`)
     },
-    chatBotConnect: () =>
-    {
-        return axios.get( `/chatBotAPI/connect` )
+    chatBotConnect: (auth) => {
+        return axios.get(`/chatBotAPI/connect/${auth}`)
     },
-    chatBotDisconnect: () =>
-    {
-        return axios.get( `/chatBotAPI/disconnect` )
+    chatBotDisconnect: () => {
+        return axios.get(`/chatBotAPI/disconnect`)
     }
 }
 export default API

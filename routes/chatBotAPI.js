@@ -1,42 +1,39 @@
-var express = require( 'express' );
+var express = require('express');
 var router = express.Router();
 
 
-const tmi = require( "tmi.js" );
-const axios = require( "axios" );
-require( "dotenv" ).config();
+const tmi = require("tmi.js");
+const axios = require("axios");
+require("dotenv").config();
 // Define configuration options
 const opts = {
     identity: {
         username: process.env.REACT_APP_BOT_USERNAME,
         password: process.env.REACT_APP_OAUTH_TOKEN,
     },
-    channels: [ process.env.REACT_APP_CHANNEL_NAME ],
+    channels: [process.env.REACT_APP_CHANNEL_NAME],
 };
-
-const ID = function ()
-{
+let firebaseIdAuth
+const ID = function () {
     // Math.random should be unique because of its seeding algorithm.
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
     // after the decimal.
-    return "_" + Math.random().toString( 36 ).substr( 2, 9 );
+    return "_" + Math.random().toString(36).substr(2, 9);
 };
 
 // Create a client with our options
-const client = new tmi.client( opts );
+const client = new tmi.client(opts);
 
 let playCounter = 0
 
 // Called every time a message comes in
-function onMessageHandler ( target, context, msg, self )
-{
-    if ( self )
-    {
+function onMessageHandler(target, context, msg, self) {
+    if (self) {
         return;
     } // Ignore messages from the bot
 
     // Remove whitespace from chat message
-    const commandName = msg.split( " " );
+    const commandName = msg.split(" ");
 
 
     const sender = context.username;
@@ -44,15 +41,12 @@ function onMessageHandler ( target, context, msg, self )
     // if the order is found, and paid for, then we should add to the queue -- check if there are other statuses
     // if order is found but not paid for, then we should let the user know we are waiting on payment confrimation and try agian?
     // if order is not found, let the user know we did not find the order
-    if ( commandName[ 0 ] === "!queue" )
-    {
-        console.log( `msg: ${msg}` );
-        const order_id = commandName[ 1 ];
-        axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/queuestatus.json` ).then( ( response ) =>
-        {
-            console.log( 'queuestatus', response.data )
-            if ( !response.data )
-            {
+    if (commandName[0] === "!queue") {
+        console.log(`msg: ${msg}`);
+        const order_id = commandName[1];
+        axios.get(`https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/queuestatus.json`).then((response) => {
+            console.log('queuestatus', response.data)
+            if (!response.data) {
                 client.say(
                     target,
                     // `${sender},I've found order_id: ${order_id}.
@@ -60,55 +54,49 @@ function onMessageHandler ( target, context, msg, self )
                     `${sender}, the queue is closed!`
                 );
             }
-            else
-            {
+            else {
 
-                console.log( `Checking order ${commandName[ 1 ]}` );
+                console.log(`Checking order ${commandName[1]}`);
                 //Check current queue if order already exists
                 const currentQueueUrl = `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json`
-                axios.get( currentQueueUrl ).then(
-                    ( response ) =>
-                    {
+                axios.get(currentQueueUrl).then(
+                    (response) => {
                         const currentQueue = response.data
-                        const found = currentQueue.find( element => element.order_id && element.order_id === commandName[ 1 ] )
-                        if ( found )
-                        {
-                            const queuePos = currentQueue.indexOf( found ) + 1
-                            console.log( 'queuePos', queuePos )
+                        const found = currentQueue.find(element => element.order_id && element.order_id === commandName[1])
+                        if (found) {
+                            const queuePos = currentQueue.indexOf(found) + 1
+                            console.log('queuePos', queuePos)
                             client.say(
                                 target,
                                 // `${sender},I've found order_id: ${order_id}.
                                 //  Your items are: ${listOfItems}`
                                 `${sender}, Your current position in the queue is ${queuePos}.`
-                            ).catch( ( error, response ) =>
-                            {
-                                console.log( error.response.status );
-                                console.log( `error on checking currentQueueUrl context: ${JSON.stringify( context )}` );
+                            ).catch((error, response) => {
+                                console.log(error.response.status);
+                                console.log(`error on checking currentQueueUrl context: ${JSON.stringify(context)}`);
                                 // client.say(
                                 //   target,
                                 //   `${sender}, I can't find this order_id: ${order_id}`
                                 // );
-                            } );
+                            });
                         }
-                        else 
-                        {
+                        else {
                             const url = `https://${process.env.REACT_APP_SHOPIFY_API}:${process.env.REACT_APP_SHOPIFY_PASSWORD}@${process.env.REACT_APP_SHOPIFY_SHOP}.myshopify.com/admin/api/2021-04/orders.json?status=any&name=${order_id}`;
 
                             axios
-                                .get( url )
-                                .then( ( response ) =>
-                                {
-                                    console.log( `status: ${response.status}` );
+                                .get(url)
+                                .then((response) => {
+                                    console.log(`status: ${response.status}`);
                                     // console.log(`data: ${JSON.stringify(response.data)}`);
                                     console.log(
-                                        `financial_status: ${response.data.orders[ 0 ].financial_status}`
+                                        `financial_status: ${response.data.orders[0].financial_status}`
                                     );
                                     // console.log(
                                     //   `financial_status: ${response.data.order.financial_status}`
                                     // );
-                                    const lineItems = response.data.orders[ 0 ].line_items;
+                                    const lineItems = response.data.orders[0].line_items;
                                     const listOfItems = lineItems.map(
-                                        ( el ) => `${el.quantity} x ${el.name}`
+                                        (el) => `${el.quantity} x ${el.name}`
                                     );
                                     client.say(
                                         target,
@@ -119,35 +107,29 @@ function onMessageHandler ( target, context, msg, self )
                                     const newItem = {
                                         id: ID(), order_id: order_id, message: `${sender}: ${listOfItems}`
                                     }
-                                    axios.get( `https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json` ).then( ( res ) =>
-                                    {
-                                        if ( res.data )
-                                        {
+                                    axios.get(`https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle/curQueueArr.json`).then((res) => {
+                                        if (res.data) {
                                             const newArr = res.data
-                                            newArr.push( newItem )
-                                            axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: newArr } ).then( ( response ) =>
-                                            {
+                                            newArr.push(newItem)
+                                            axios.patch(`https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json?auth=${firebaseIdAuth}`, { curQueueArr: newArr }).then((response) => {
                                                 // console.log( response )
-                                            } )
-                                        } else
-                                        {
-                                            axios.patch( 'https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json', { curQueueArr: [ newItem ] } ).then( ( response ) =>
-                                            {
+                                            })
+                                        } else {
+                                            axios.patch(`https://rodsqueue-default-rtdb.firebaseio.com/seanthenkyle.json?auth=${firebaseIdAuth}`, { curQueueArr: [newItem] }).then((response) => {
                                                 // console.log( response )
-                                            } )
+                                            })
                                         }
-                                    } )
+                                    })
 
-                                } )
-                                .catch( ( error, response ) =>
-                                {
-                                    console.log( error.response.status );
-                                    console.log( `context: ${JSON.stringify( context )}` );
+                                })
+                                .catch((error, response) => {
+                                    console.log(error.response.status);
+                                    console.log(`context: ${JSON.stringify(context)}`);
                                     client.say(
                                         target,
                                         `${sender}, I can't find this order_id: ${order_id}`
                                     );
-                                } );
+                                });
                         }
                     }
                 )
@@ -159,25 +141,22 @@ function onMessageHandler ( target, context, msg, self )
 
 
             }
-        } ).catch( ( error, response ) =>
-        {
+        }).catch((error, response) => {
             // console.log( error.response.status );
-            console.log( `context: ${JSON.stringify( error )}` );
+            console.log(`context: ${JSON.stringify(error)}`);
 
-        } );
+        });
 
     }
     // my giveaway burner logic - essentially, if we count 10 people run the play command, the bot also plays. 
     // TODO: figure out a way to reset the counter after a marbles game is run
-    else if ( commandName[ 0 ] === "!play" ) 
-    {
-        console.log( playCounter, 'play before' )
+    else if (commandName[0] === "!play") {
+        console.log(playCounter, 'play before')
 
         playCounter++
 
-        console.log( playCounter, 'play after' )
-        if ( playCounter === 10 )
-        {
+        console.log(playCounter, 'play after')
+        if (playCounter === 10) {
             client.say(
                 target,
                 `!play`
@@ -187,101 +166,88 @@ function onMessageHandler ( target, context, msg, self )
 
     }
     // leaving in the dice command
-    else if ( commandName[ 0 ] === "!dice" )
-    {
-        const sides = isNaN( commandName[ 1 ] ) ? 6 : commandName[ 1 ]
-        console.log( sides )
-        const num = rollDice( sides );
-        console.log( num )
-        client.say( target, `${sender}, you rolled a ${num}` );
-        console.log( `* Executed ${commandName} command` );
-    } else
-    {
-        console.log( `* Unknown command ${commandName}` );
+    else if (commandName[0] === "!dice") {
+        const sides = isNaN(commandName[1]) ? 6 : commandName[1]
+        console.log(sides)
+        const num = rollDice(sides);
+        console.log(num)
+        client.say(target, `${sender}, you rolled a ${num}`);
+        console.log(`* Executed ${commandName} command`);
+    } else {
+        console.log(`* Unknown command ${commandName}`);
     }
 }
 // Function called when the "dice" command is issued
-function rollDice ( sides )
-{
+function rollDice(sides) {
     // const sides = 6;
-    console.log( 'rolling d', sides )
-    return Math.floor( Math.random() * sides ) + 1;
+    console.log('rolling d', sides)
+    return Math.floor(Math.random() * sides) + 1;
 }
 
 // Called every time the bot connects to Twitch chat
-function onConnectedHandler ( addr, port )
-{
-    console.log( `* Connected to ${addr}:${port}` );
+function onConnectedHandler(addr, port) {
+    console.log(`* Connected to ${addr}:${port}`);
 }
 
 let isConnected = false
 
-router.get( '/', function ( req, res, next )
-{
-    res.send( isConnected );
-} );
+router.get('/', function (req, res, next) {
+    res.send(isConnected);
+});
 
 //endpoint to turn the bot on
-router.get( '/connect', function ( req, res, next )
-{
-    if ( isConnected ) 
-    {
-        console.log( 'bot is already connected' )
-        res.sendStatus( 200 )
+router.get('/connect/:auth', function (req, res, next) {
+    firebaseIdAuth = req.params.auth
+    console.log('firebaseIdAuth', firebaseIdAuth)
+    if (isConnected) {
+        console.log('bot is already connected')
+        res.sendStatus(200)
     }
-    else
-    {
-        console.log( 'connecting chatbot client' );
+    else {
+        console.log('connecting chatbot client');
         // Connect to Twitch:
-        client.connect().then( ( data ) =>
-        {
+        client.connect().then((data) => {
             // data returns [server, port]
-            console.log( `client connected on ${data}` )
+            console.log(`client connected on ${data}`)
             // Register our event handlers (defined below)
-            client.on( "message", onMessageHandler );
-            client.on( "connected", onConnectedHandler );
+            client.on("message", onMessageHandler);
+            client.on("connected", onConnectedHandler);
             isConnected = true
-            res.sendStatus( 200 )
-        } ).catch( ( err ) =>
-        {
-            console.log( `error when trying to connect: ${err}` )
-            res.sendStatus( 200 )
-        } )
+            res.sendStatus(200)
+        }).catch((err) => {
+            console.log(`error when trying to connect: ${err}`)
+            res.sendStatus(200)
+        })
     }
 
 
-} );
+});
 
 
 
 //endpoint to turn the bot on
-router.get( '/disconnect', function ( req, res, next )
-{
-    if ( !isConnected ) 
-    {
-        console.log( 'bot is not connected' )
-        res.sendStatus( 200 )
+router.get('/disconnect', function (req, res, next) {
+    if (!isConnected) {
+        console.log('bot is not connected')
+        res.sendStatus(200)
     }
-    else
-    {
-        console.log( 'disconnecting chatbot client' );
+    else {
+        console.log('disconnecting chatbot client');
         // Connect to Twitch:
-        client.disconnect().then( ( data ) =>
-        {
+        client.disconnect().then((data) => {
             // data returns [server, port]
-            console.log( `client disconnected on ${data}` )
+            console.log(`client disconnected on ${data}`)
             isConnected = false
-            res.sendStatus( 200 )
-        } ).catch( ( err ) =>
-        {
-            console.log( `error when trying to disconnect: ${err}` )
-            res.sendStatus( 200 )
-        } );
+            res.sendStatus(200)
+        }).catch((err) => {
+            console.log(`error when trying to disconnect: ${err}`)
+            res.sendStatus(200)
+        });
 
     }
 
 
-} );
+});
 
 
 

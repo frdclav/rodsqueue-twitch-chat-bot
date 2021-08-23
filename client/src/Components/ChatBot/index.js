@@ -8,32 +8,34 @@ import API from '../../Utils/API';
 
 
 
-const ChatBot = ( props ) => 
-{
-
+const ChatBot = (props) => {
+    let firebaseIdAuth
+    props.firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(idToken => {
+        console.log(idToken, 'idToken')
+        firebaseIdAuth = idToken
+    }).catch(function (error) {
+        // Handle error
+        console.log('err with firebase auth', error)
+    });
 
 
 
     //state to track if bot is on or off
-    const [ botState, setBotState ] = useState( {} )
-    useEffect( () =>
-    {
-        API.chatBotStatus().then( ( response ) =>
-        {
-            console.log( response.data )
-            setBotState( { ...botState, bool: response.data } )
+    const [botState, setBotState] = useState({})
+    useEffect(() => {
+        API.chatBotStatus().then((response) => {
+            console.log(response.data)
+            setBotState({ ...botState, bool: response.data })
             // console.log( botState )
-        } )
-    }, [] )
+        })
+    }, [])
 
     // Connect to Twitch:
-    const connectToClient = () =>
-    {
+    const connectToClient = () => {
 
-        API.chatBotConnect().then( ( response ) => 
-        {
+        API.chatBotConnect(firebaseIdAuth).then((response) => {
             // console.log( `connectToChatBotClient: ${JSON.stringify( response )}` )
-            setBotState( { ...botState, bool: true } )
+            setBotState({ ...botState, bool: true })
 
         }
         )
@@ -41,13 +43,11 @@ const ChatBot = ( props ) =>
 
 
     // disconnect from Twitch:
-    const disconnectToClient = () =>
-    {
+    const disconnectToClient = () => {
 
-        API.chatBotDisconnect().then( ( response ) => 
-        {
+        API.chatBotDisconnect().then((response) => {
             // console.log( `disconnectFromChatBotClient: ${JSON.stringify( response )}` )
-            setBotState( { ...botState, bool: false } )
+            setBotState({ ...botState, bool: false })
 
         }
         )

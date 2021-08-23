@@ -40,7 +40,7 @@ const AuthedHelper = (props) => {
 						</Grid>
 						<Grid item style={{ padding: '10px' }}>
 
-							<ChatBot></ChatBot>
+							<ChatBot firebase={props.firebase}></ChatBot>
 						</Grid>
 					</Grid>
 					<Grid item style={{ padding: '10px' }}>
@@ -50,9 +50,9 @@ const AuthedHelper = (props) => {
 								</Typography>
 
 							} action={
-								<QueueActions curShop={curShop}></QueueActions>
+								<QueueActions firebase={props.firebase} curShop={curShop}></QueueActions>
 							} subheader={
-								<QueueStatus curShop={curShop}></QueueStatus>
+								<QueueStatus firebase={props.firebase} curShop={curShop}></QueueStatus>
 							}>
 							</CardHeader>
 							<CardContent>
