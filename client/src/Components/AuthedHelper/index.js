@@ -56,7 +56,7 @@ const AuthedHelper = (props) => {
 							}>
 							</CardHeader>
 							<CardContent>
-								<Queue dbValue={curQueue} curShop={curShop} />
+								<Queue firebase={props.firebase} dbValue={curQueue} curShop={curShop} />
 							</CardContent>
 						</Card>
 					</Grid>
