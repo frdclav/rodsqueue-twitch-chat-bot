@@ -13,18 +13,16 @@ import { ChatBot } from '../ChatBot';
 import { ChatBotLogContext } from '../../Context/ChatBotLogContext'
 
 
-const AuthedHelper = ( props ) =>
-{
+const AuthedHelper = (props) => {
 	// const firebase = props.firebase
 
-	const [ curQueue, setCurQueue ] = useState( props.curQueue )
+	const [curQueue, setCurQueue] = useState(props.curQueue)
 	const curShop = props.curShop
-	const [ botLog, setBotLog ] = useState( {} )
-	useEffect( () =>
-	{
+	const [botLog, setBotLog] = useState({})
+	useEffect(() => {
 		// console.log( 'curShop', curShop )
-		setCurQueue( props.curQueue )
-	}, [ props.curQueue ] )
+		setCurQueue(props.curQueue)
+	}, [props.curQueue])
 	return (
 		<ChatBotLogContext.Provider value={{ botLog, setBotLog }}>
 
@@ -35,7 +33,7 @@ const AuthedHelper = ( props ) =>
 						<Grid item>
 
 
-							<AddToQueueInput curShop={props.curShop} curQueue={curQueue} />
+							<AddToQueueInput firebase={props.firebase} curShop={props.curShop} curQueue={curQueue} />
 
 
 

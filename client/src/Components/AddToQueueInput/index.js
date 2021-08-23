@@ -6,8 +6,7 @@ import { Card } from '@material-ui/core'
 import API from "../../Utils/API"
 // import { QueueSwitch } from "../QueueSwitch";
 
-const AddToQueueInput = ( props ) =>
-{
+const AddToQueueInput = (props) => {
 
 
 
@@ -21,17 +20,24 @@ const AddToQueueInput = ( props ) =>
   //   console.log( "props updating", props )
   //   setTheDbValue( props )
   // }, [ props ] )
-  const handleSubmit = ( newValue ) =>
-  {
+  let firebaseIdAuth
+  props.firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(idToken => {
+    console.log(idToken, 'idToken')
+    firebaseIdAuth = idToken
+  }).catch(function (error) {
+    // Handle error
+    console.log('err with firebase auth', error)
+  });
+
+  const handleSubmit = (newValue) => {
     // console.log( 'newValue', newValue );
     // console.log( 'props', theDbValue );
-    API.addToQueueAPI( { storename: props.curShop, value: newValue } )
+    API.addToQueueAPI({ storename: props.curShop, value: newValue, auth: firebaseIdAuth })
   }
-  const handleClearQueue = () =>
-  {
+  const handleClearQueue = () => {
 
     // console.log( 'clearqueue!', props.curShop )
-    API.clearQueue( { storename: props.curShop, value: [] } )
+    API.clearQueue({ storename: props.curShop, value: [] })
   }
   return (
     <Card>
