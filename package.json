@@ -27,7 +27,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
-    "express": "~4.16.1",
+    "express": "~4.17.3",
     "firebase": "^8.4.3",
     "firebaseui": "^4.8.0",
     "http-errors": "~1.6.3",
